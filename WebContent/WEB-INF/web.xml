@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC  
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"  
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">  
 <web-app version="3.0"
 	xmlns="http://java.sun.com/xml/ns/j2ee" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
