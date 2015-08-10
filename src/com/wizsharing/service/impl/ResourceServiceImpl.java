@@ -59,6 +59,11 @@ public class ResourceServiceImpl implements IResourceService {
 		this.baseService.add(entity);
 		
 	}
+	
+	@Override
+	public Resource getResource(String id) throws Exception{
+		return this.baseService.getUnique("Resource", new String[]{"id"}, new String[]{id});
+	}
 
 	@Override
 	public void doUpdate(Resource entity) throws Exception {
@@ -83,6 +88,11 @@ public class ResourceServiceImpl implements IResourceService {
 		Map<String, Object> paramMap = new HashMap<String, Object>();  
 	    paramMap.put("id", id);  
 		this.jdbcDao.delete(sql, paramMap);
+		
+	}
+
+	@Override
+	public void doUpdateName(String id) throws Exception {
 		
 	}
 }

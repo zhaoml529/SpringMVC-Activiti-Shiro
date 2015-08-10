@@ -51,15 +51,20 @@ function zTreeOnRename(event, treeId, treeNode, isCancel) {
 	$.ajax({
 		async: false,			//同步，等待success完成后继续执行。
 		cache: false,
-		url: ctx+"/menu",
+		url: ctx+"/resource/doUpdate",
 		data: { id: treeNode.id, name: treeNode.name },
 		type: 'POST',
 		dataType: "json",
-		error: function () {
-			alert('请求失败');
-		},
 		success: function(data){ 
-			treeNodes = data;
+			if (data.status) {
+				zTree.reAsyncChildNodes(null, "refresh");	//重新异步加载 zTree
+			} 
+			$.messager.show({
+				title : data.title,
+				msg : data.message,
+				icon: "info",			//error、question、info、warning
+				timeout : 1000 * 2
+			});
 		}
 	});
 

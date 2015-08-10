@@ -3,9 +3,9 @@ package com.wizsharing.controller;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wizsharing.entity.Message;
@@ -27,7 +27,7 @@ public class ResourceController {
 	
 	@RequestMapping(value = "/doUpdate", method = RequestMethod.POST)
 	@ResponseBody
-	public Message doUpdate(@ModelAttribute Resource resource) throws Exception{
+	public Message doUpdate(Resource resource) throws Exception{
 		Message message = new Message();
 		try {
 			this.resourceService.doUpdate(resource);
@@ -39,5 +39,11 @@ public class ResourceController {
 			throw e;
 		}
 		return message;
+	}
+	
+	@RequestMapping(value = "/doUpdateById", method = RequestMethod.POST)
+	@ResponseBody
+	public Message doUpdate(@RequestParam("id") String id, @RequestParam("name") String name) throws Exception{
+		return null;
 	}
 }
