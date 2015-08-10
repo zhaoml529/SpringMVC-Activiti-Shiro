@@ -2,6 +2,7 @@ package com.wizsharing.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public interface IBaseDao<T> {
 	/**
@@ -108,4 +109,21 @@ public interface IBaseDao<T> {
 	 * @throws Exception
 	 */
 	public Integer getCount(final String hql) throws Exception;
+	
+	/**
+	 * 执行HQL语句
+	 * @param hql
+	 * @return
+	 * @throws Exception
+	 */
+	public Integer executeHql(final String hql) throws Exception;
+	
+	/**
+	 * 批量执行HQL (更新) 响应数目
+	 * @param hql
+	 * @param params
+	 * @return
+	 * @throws Exception
+	 */
+	public Integer executeHql(String hql, Map<String, Object> params) throws Exception;
 }

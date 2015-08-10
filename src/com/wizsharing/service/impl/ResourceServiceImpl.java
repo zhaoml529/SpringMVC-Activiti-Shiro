@@ -92,7 +92,8 @@ public class ResourceServiceImpl implements IResourceService {
 	}
 
 	@Override
-	public void doUpdateName(String id) throws Exception {
-		
+	public void doUpdateName(String id, String name) throws Exception {
+		String hql = "update Resource set name="+name+" where id="+id;
+		this.baseService.executeHql(hql);
 	}
 }

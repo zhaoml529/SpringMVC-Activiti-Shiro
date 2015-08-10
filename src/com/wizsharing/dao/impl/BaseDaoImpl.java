@@ -3,6 +3,7 @@ package com.wizsharing.dao.impl;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -107,5 +108,21 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 		Query query = this.getSession().createQuery(hql);
 		int count=(int)((long)query.uniqueResult());
 	    return Integer.valueOf(count);
+	}
+
+	@Override
+	public Integer executeHql(String hql) throws Exception {
+		return this.getSession().createQuery(hql).executeUpdate();
+	}
+
+	@Override
+	public Integer executeHql(String hql, Map<String, Object> params) throws Exception {
+		Query q = this.getSession().createQuery(hql);
+		if (params != null && !params.isEmpty()) {
+			for (String key : params.keySet()) {
+				q.setParameter(key, params.get(key));
+			}
+		}
+		return q.executeUpdate();
 	}
 }

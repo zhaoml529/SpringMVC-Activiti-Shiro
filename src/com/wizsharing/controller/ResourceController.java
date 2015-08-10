@@ -41,9 +41,35 @@ public class ResourceController {
 		return message;
 	}
 	
-	@RequestMapping(value = "/doUpdateById", method = RequestMethod.POST)
+	@RequestMapping(value = "/doUpdateName", method = RequestMethod.POST)
 	@ResponseBody
-	public Message doUpdate(@RequestParam("id") String id, @RequestParam("name") String name) throws Exception{
-		return null;
+	public Message doUpdate(@RequestParam("id") String id, @RequestParam("name") String name) throws Exception {
+		Message message = new Message();
+		try {
+			this.resourceService.doUpdateName(id, name);
+			message.setStatus(Boolean.TRUE);
+			message.setMessage("保存成功！");
+		} catch (Exception e) {
+			message.setStatus(Boolean.FALSE);
+			message.setMessage("保存失败！");
+			throw e;
+		}
+		return message;
+	}
+	
+	@RequestMapping(value = "/doDelete")
+	@ResponseBody
+	public Message doDelete(@RequestParam("id") String id) throws Exception {
+		Message message = new Message();
+		try {
+			this.resourceService.doDelete(id);
+			message.setStatus(Boolean.TRUE);
+			message.setMessage("保存成功！");
+		} catch (Exception e) {
+			message.setStatus(Boolean.FALSE);
+			message.setMessage("保存失败！");
+			throw e;
+		}
+		return message;
 	}
 }

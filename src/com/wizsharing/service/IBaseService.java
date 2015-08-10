@@ -2,6 +2,7 @@ package com.wizsharing.service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import com.wizsharing.pagination.Page;
 
@@ -30,4 +31,8 @@ public interface IBaseService<T> {
 	public List<T> findByQuery(final Class<T> entity, String[] columns, String[] querys) throws Exception;
 	
 	public List<T> findByPage(String tableSimpleName,String[] columns,String[] values, String[] orderBy, String[] orderType, Page<T> page) throws Exception;
+	
+	public Integer executeHql(final String hql) throws Exception;
+	
+	public Integer executeHql(String hql, Map<String, Object> params) throws Exception;
 }

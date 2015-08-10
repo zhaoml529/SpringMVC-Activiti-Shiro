@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -228,7 +229,16 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
         }else{
     	    return Collections.emptyList();
         }
-        
+	}
+
+	@Override
+	public Integer executeHql(String hql) throws Exception {
+		return this.baseDao.executeHql(hql);
+	}
+
+	@Override
+	public Integer executeHql(String hql, Map<String, Object> params) throws Exception {
+		return this.baseDao.executeHql(hql, params);
 	}
 	
 }

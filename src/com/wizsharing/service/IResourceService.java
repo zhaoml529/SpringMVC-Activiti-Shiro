@@ -22,7 +22,7 @@ public interface IResourceService {
 	
 	public void doUpdate(Resource entity) throws Exception;
 	
-	public void doUpdateName(String id) throws Exception;
+	public void doUpdateName(String id, String name) throws Exception;
 	
 	public void doDelete(Resource entity) throws Exception;
 	
