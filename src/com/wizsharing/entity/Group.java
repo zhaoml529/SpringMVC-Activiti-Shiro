@@ -15,9 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 /**
  * 用户组
  * @author ZML
@@ -43,7 +40,6 @@ public class Group implements Serializable{
 	private String type;
 
 	@OneToMany(targetEntity=User.class,cascade=CascadeType.ALL)
-	@Fetch(FetchMode.JOIN)
 	//updatable=false很关键，如果没有它，在级联删除的时候就会报错(反转的问题)
 	@JoinColumn(name="GROUP_ID",updatable=false)
     private Set<User> user = new HashSet<User>();

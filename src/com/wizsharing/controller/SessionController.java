@@ -22,7 +22,7 @@ import com.wizsharing.util.Constants;
 
 @RequiresPermissions("session:*")
 @Controller
-@RequestMapping("/sessions")
+@RequestMapping(value = "/sessions")
 public class SessionController {
     @Autowired
     private SessionDAO sessionDAO;

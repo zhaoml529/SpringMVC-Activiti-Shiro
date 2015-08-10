@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -58,7 +59,7 @@ public class User implements Serializable{
     private Integer locked;
 	
 	//多对一，@JoinColumn与@column类似，指定映射的数据库字段
-	@ManyToOne(targetEntity = Group.class)
+	@ManyToOne(targetEntity = Group.class, fetch = FetchType.LAZY)
 	@JoinColumn(name="GROUP_ID",updatable=false)
     private Group group;
     

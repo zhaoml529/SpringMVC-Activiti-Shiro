@@ -1,20 +1,34 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %> 
-<%@ taglib tagdir="/WEB-INF/tags" prefix="yzky" %>
-
+<%
+	String easyuiThemeName="metro";
+	Cookie cookies[] =request.getCookies();
+	if(cookies!=null&&cookies.length>0){
+		for(Cookie cookie : cookies){
+			if (cookie.getName().equals("cookiesColor")) {
+				easyuiThemeName = cookie.getValue();
+				break;
+			}
+		}
+	}
+%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
-<link rel="stylesheet" href="${ctx}/css/zTreeStyle/zTreeStyle.css" type="text/css" />
-<%-- <link rel="stylesheet" href="${ctx}/css/jquery-ui.min.css" type="text/css" />
-<link rel="stylesheet" href="${ctx}/css/jquery-ui.structure.min.css" type="text/css" />
-<link rel="stylesheet" href="${ctx}/css/jquery-ui.theme.min.css" type="text/css" /> --%>
-<link rel="stylesheet" href="${ctx}/css/jquery_validation_engine/validationEngine.jquery.css" type="text/css" />
-<link rel="stylesheet" href="${ctx}/css/jquery_validation_engine/template.css" type="text/css" />
-
 <script type="text/javascript" src="${ctx}/js/jquery-1.10.2.min.js"></script>
-<%-- <script type="text/javascript" src="${ctx}/js/jquery-ui.min.js"></script> --%>
+<script type="text/javascript" src="${ctx}/js/jquery-migrate-1.2.1.min.js"></script>
+
+<link rel="stylesheet" href="${ctx}/css/zTreeStyle/zTreeStyle.css" type="text/css" />
+<link rel="stylesheet" href="${ctx}/css/themes/<%=easyuiThemeName %>/easyui.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="${ctx}/css/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="${ctx}/css/themes/common.css">
+
 <script type="text/javascript" src="${ctx}/js/jquery.ztree.all-3.5.min.js"></script>
-<script type="text/javascript" src="${ctx}/js/jquery_validation_engine/jquery.validationEngine.js"></script>
-<script type="text/javascript" src="${ctx}/js/jquery_validation_engine/jquery.validationEngine-zh_CN.js"></script>
+<script type="text/javascript" src="${ctx}/js/moment.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/easyui/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="${ctx}/js/easyui/jqueryUtil.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+	var ctx = "${ctx}";
+</script>
 
