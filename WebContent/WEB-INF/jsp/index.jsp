@@ -76,21 +76,19 @@
 	</script>
  </head>
  <body class="easyui-layout">
-	<div data-options="region:'north',border:false" style="height:40px;background:#EEE;padding:10px;overflow: hidden;"  href="${ctx }/north"></div>
+	<div data-options="region:'north',border:false" style="height:40px;background:#EEE;padding:10px;overflow: hidden;" href="${ctx }/north"></div>
 	<div data-options="region:'west',split:true,title:'主要菜单'" style="width:200px;">
-		<div id="menuAccordion">
-			<div class="well well-small">
-				<shiro:hasRole name="user">
-					<span>用户功能</span>
-					<input value="user" id="role" type="hidden">
-					<ul id="tree_user" class="ztree"></ul>
-				</shiro:hasRole>
-				<shiro:hasRole name="admin">
-					<span>管理员功能</span>
-					<input value="admin" id="role" type="hidden">
-					<ul id="tree_admin" class="ztree"></ul>
-				</shiro:hasRole>
-			</div>
+		<div class="well well-small">
+			<shiro:hasRole name="user">
+				<span>用户功能</span>
+				<input value="user" id="role" type="hidden">
+				<ul id="tree_user" class="ztree"></ul>
+			</shiro:hasRole>
+			<shiro:hasRole name="admin">
+				<span>管理员功能</span>
+				<input value="admin" id="role" type="hidden">
+				<ul id="tree_admin" class="ztree"></ul>
+			</shiro:hasRole>
 		</div>
 	</div> 
 	<div data-options="region:'south',border:false" style="height:25px;background:#EEE;padding:5px;" href="${ctx }/south"></div>
