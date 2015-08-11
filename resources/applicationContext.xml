@@ -69,7 +69,7 @@
 	<!-- <bean id="applicationContextHelper" class="com.wizsharing.util.ApplicationContextHelper"/> -->
   	
    	<!-- 开启AOP监听 只对当前配置文件有效 -->
-	<aop:aspectj-autoproxy expose-proxy="true"/>
+	<!-- <aop:aspectj-autoproxy expose-proxy="true"/> -->
   	
   	<!-- 开启注解事务 只对当前配置文件有效 -->
   	<!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->
@@ -83,14 +83,15 @@
         <tx:attributes>
             <tx:method name="doSave*" propagation="REQUIRED" />  
            	<tx:method name="doAdd*" propagation="REQUIRED" />  
-           	<tx:method name="save*" propagation="REQUIRED" />  
-           	<tx:method name="add*" propagation="REQUIRED" />  
            	<tx:method name="doCreate*" propagation="REQUIRED" />  
           	<tx:method name="doInsert*" propagation="REQUIRED" />  
            	<tx:method name="doUpdate*" propagation="REQUIRED" />  
-           	<tx:method name="doMerge*" propagation="REQUIRED" />  
            	<tx:method name="doDelete*" propagation="REQUIRED" />  
            	<tx:method name="doRemove*" propagation="REQUIRED" />  
+           	<tx:method name="save*" propagation="REQUIRED" />  
+           	<tx:method name="add*" propagation="REQUIRED" />  
+           	<tx:method name="update*" propagation="REQUIRED" />  
+           	<tx:method name="insert*" propagation="REQUIRED" />  
            	<tx:method name="delete" propagation="REQUIRED" />  
            	
            	<!--hibernate4必须配置为开启事务(REQUIRED) 否则 getCurrentSession()获取不到-->

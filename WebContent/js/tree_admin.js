@@ -1,18 +1,16 @@
 /**
  * admin 可编辑菜单
  */
-function zTreeOnClick(event, treeId, treeNode) {
-    event.preventDefault();		//阻止zTree自动打开连接，默认为 target='_blank'
-    if(treeNode.url != '#' || treeNode.url == '') {
-	    addTab(treeNode.name, treeNode.url);	//easyui添加Tab
-    }else{
-    	zTree.expandNode(treeNode);				//展开节点
-    }
-};
-
 var setting_admin = {
+	async: {
+		enable: true,
+		url:ctx+"/menu",
+		autoParam:["id"],
+		type: 'POST',
+		dataType: "json"
+	},
 	view: {
-		addHoverDom: addHoverDom,
+		addHoverDom: addHoverDom,//自定义添加节点，官方没有提供直接添加的接口
 		removeHoverDom: removeHoverDom,
 		selectedMulti: false,	//是否允许同时选中多个节点
 		showLine : true,		//是否显示节点间的连线
@@ -40,7 +38,7 @@ var setting_admin = {
 		}
 	},
 	callback: {
-		onClick: zTreeOnClick,				//点击节点时
+		onClick: onClick,				//点击节点时
 		beforeRename: beforeRename,	//修改节点之前
 		beforeRemove: beforeRemove,	//删除之前
 		
@@ -52,6 +50,7 @@ var setting_admin = {
 		beforeDragOpen: beforeDragOpen,
 		onDrag: onDrag,
 		onDrop: onDrop
+		
 	}
 }
 
@@ -67,23 +66,41 @@ function beforeRename(treeId, treeNode, newName, isCancel) {
 
 function beforeRemove(treeId, treeNode) {
 	zTree.selectNode(treeNode);
-	$.messager.confirm('提示','确定删除此菜单？', function (result) {
-		return result;
-	});
-	return false;
+//	$.messager.confirm('提示','确定删除此菜单？', function (result) {	//此方法不能实现，因为它是同步的
+//		if(result){
+//
+//		}
+//	});
+	return confirm("确认删除节点【" + treeNode.name + "】吗？");
 }
 
-var newCount = 1;
+function onClick(event, treeId, treeNode) {
+    event.preventDefault();		//阻止zTree自动打开连接，默认为 target='_blank'
+    if(treeNode.url != '#' || treeNode.url == '') {
+	    addTab(treeNode.name, treeNode.url);	//easyui添加Tab
+    }else{
+    	zTree.expandNode(treeNode);				//单击展开节点(默认为双击)
+    }
+};
+
+var newCount = 1, new_Tid;
 function addHoverDom(treeId, treeNode) {
 	var sObj = $("#" + treeNode.tId + "_span");
 	if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
 	var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
-		+ "' title='add node' onfocus='this.blur();'></span>";
+		+ "' title='add' onfocus='this.blur();'></span>";
 	sObj.after(addStr);
 	var btn = $("#addBtn_"+treeNode.tId);
 	if (btn) btn.bind("click", function(){
-		//var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-		zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
+		var parentId = treeNode.id;
+		var name = "新节点" + (newCount++);
+		var resourceId = onAdd(parentId, name);	//数据库中添加节点
+		alert(resourceId);
+		
+		var newNode = [{id:resourceId, name:name, pId:parentId}];
+		newNode = zTree.addNodes(treeNode, newNode);
+		//setTimeout(function () { zTree.expandNode(treeNode, true, true, true); }, 100);
+		zTree.editName(newNode[0]);
 		return false;
 	});
 };
@@ -91,33 +108,61 @@ function removeHoverDom(treeId, treeNode) {
 	$("#addBtn_"+treeNode.tId).unbind().remove();
 };
 
-//更新
-function onRename(event, treeId, treeNode, isCancel) {
-	alert(treeNode.id + ", " + treeNode.name);
+//添加
+function onAdd(pId, name) {
+	var resourceId;
 	$.ajax({
 		async: false,			//同步，等待success完成后继续执行。
 		cache: false,
-		url: ctx+"/resource/doUpdateName",
-		data: { id: treeNode.id, name: treeNode.name },
+		url: ctx+"/resource/addTree",
+		data: { parentId: pId, name: name },
 		type: 'POST',
 		dataType: "json",
-		success: function(data){ 
-			if (data.status) {
-				zTree.reAsyncChildNodes(null, "refresh");	//重新异步加载 zTree
-			} 
+		success: function(result){ 
+			if(result.status){
+				resourceId = result.data;
+				//zTree.reAsyncChildNodes(null, "refresh");	//重新异步加载 zTree
+			}
 			$.messager.show({
-				title : data.title,
-				msg : data.message,
+				title : result.title,
+				msg : result.message,
 				icon: "info",			//error、question、info、warning
 				timeout : 1000 * 2
 			});
 		}
 	});
+	return resourceId;
+}
+
+//更新
+function onRename(event, treeId, treeNode, isCancel) {
+	if(!isCancel){	//是否取消编辑
+		$.ajax({
+			async: false,			//同步，等待success完成后继续执行。
+			cache: false,
+			url: ctx+"/resource/updateTree",
+			data: { id: treeNode.id, name: treeNode.name },
+			type: 'POST',
+			dataType: "json",
+			success: function(data){ 
+				if (data.status) {
+					zTree.reAsyncChildNodes(treeNode, "refresh");	//重新异步加载 zTree
+				} 
+				$.messager.show({
+					title : data.title,
+					msg : data.message,
+					icon: "info",			//error、question、info、warning
+					timeout : 1000 * 2
+				});
+			}
+		});
+	}else{
+		zTree.cancelEditName();
+    }
 }
 
 //删除
 function onRemove(event, treeId, treeNode) {
-	alert(treeNode.tId + ", " + treeNode.name);
 	$.ajax({
 		async: false,			//同步，等待success完成后继续执行。
 		cache: false,
@@ -127,7 +172,7 @@ function onRemove(event, treeId, treeNode) {
 		dataType: "json",
 		success: function(data){ 
 			if (data.status) {
-				zTree.reAsyncChildNodes(null, "refresh");	//重新异步加载 zTree
+				zTree.reAsyncChildNodes(treeNode, "refresh");	//重新异步加载 zTree
 			} 
 			$.messager.show({
 				title : data.title,

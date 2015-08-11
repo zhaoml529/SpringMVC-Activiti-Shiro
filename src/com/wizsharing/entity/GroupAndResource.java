@@ -34,6 +34,15 @@ public class GroupAndResource implements Serializable {
     @Column(name = "resource_id", length = 50, nullable = false)
     private Integer resourceId;
 
+    public GroupAndResource() {
+    	
+    }
+    
+    public GroupAndResource(Integer groupId, Integer resourceId) {
+    	this.groupId = groupId;
+    	this.resourceId = resourceId;
+    }
+    
 	public Integer getId() {
 		return id;
 	}

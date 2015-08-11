@@ -32,7 +32,20 @@ public interface IBaseService<T> {
 	
 	public List<T> findByPage(String tableSimpleName,String[] columns,String[] values, String[] orderBy, String[] orderType, Page<T> page) throws Exception;
 	
+	/**
+	 * 批量执行HQL 响应数目
+	 * @param hql
+	 * @return
+	 * @throws Exception
+	 */
 	public Integer executeHql(final String hql) throws Exception;
 	
+	/**
+	 * 批量执行HQL (更新) 响应数目
+	 * @param hql
+	 * @param params
+	 * @return
+	 * @throws Exception
+	 */
 	public Integer executeHql(String hql, Map<String, Object> params) throws Exception;
 }

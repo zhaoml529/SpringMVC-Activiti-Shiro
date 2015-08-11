@@ -22,6 +22,7 @@ public class UserUtil {
      */
     public static void saveUserToSession(Session session, User user) {
         session.setAttribute(Constants.CURRENT_USER, user);
+        session.setAttribute(Constants.GROUP_ID, user.getGroup().getId());
     }
 
     /**
@@ -33,9 +34,14 @@ public class UserUtil {
     public static User getUserFromSession() {
     	Subject currentUser = SecurityUtils.getSubject();
     	User user = (User) currentUser.getSession().getAttribute(Constants.CURRENT_USER);
-    	return user == null ? null : user;
+    	return user;
     }
 
+    public static Integer getUserGroupFromSession() {
+    	Subject currentUser = SecurityUtils.getSubject();
+    	Integer groupId = (Integer) currentUser.getSession().getAttribute(Constants.GROUP_ID);
+    	return groupId;
+    }
     /**
      * 从Session移除当前用户信息
      * @param session

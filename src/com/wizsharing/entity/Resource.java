@@ -33,7 +33,7 @@ public class Resource implements Serializable {
 	@Column(name = "id", length = 5, nullable = false, unique = true)
 	private Integer id; 							//编号
 	
-	@Column(name = "name", length = 50, nullable = false, unique = true)
+	@Column(name = "name", length = 50, nullable = false)
 	@NotEmpty(message = "{resource.name.not.empty}")
     private String name; 							//资源名称
 	

@@ -1,5 +1,6 @@
 package com.wizsharing.service.impl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,9 +56,9 @@ public class ResourceServiceImpl implements IResourceService {
 	}
 
 	@Override
-	public void doAdd(Resource entity) throws Exception {
-		this.baseService.add(entity);
-		
+	public Serializable  doAdd(Resource entity) throws Exception {
+		Serializable id = this.baseService.add(entity);
+		return id;
 	}
 	
 	@Override
@@ -83,17 +84,23 @@ public class ResourceServiceImpl implements IResourceService {
 	}
 
 	@Override
-	public void doDelete(String id) throws Exception {
+	public Integer doDelete(String id) throws Exception {
 		String sql = "delete from T_RESOURCE where id=:id ";
 		Map<String, Object> paramMap = new HashMap<String, Object>();  
 	    paramMap.put("id", id);  
-		this.jdbcDao.delete(sql, paramMap);
+		return this.jdbcDao.delete(sql, paramMap);
 		
 	}
 
 	@Override
-	public void doUpdateName(String id, String name) throws Exception {
-		String hql = "update Resource set name="+name+" where id="+id;
-		this.baseService.executeHql(hql);
+	public Integer doUpdateName(String id, String name) throws Exception {
+		String hql = "update Resource set name='"+name+"' where id="+id;
+		return this.baseService.executeHql(hql);
+	}
+
+	@Override
+	public Integer doUpdateAvailable(String id) throws Exception {
+		String hql = "update Resource set available=0 where id="+id;
+		return this.baseService.executeHql(hql);
 	}
 }

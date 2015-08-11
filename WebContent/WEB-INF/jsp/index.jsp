@@ -11,6 +11,9 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<script type="text/javascript" src="${ctx}/js/tree_admin.js"></script>
+	<style type="text/css">
+		.ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
+	</style>
 	<script type="text/javascript">
 		function zTreeOnClick(event, treeId, treeNode) {
 		    event.preventDefault();		//阻止zTree自动打开连接，默认为 target='_blank'
@@ -64,9 +67,9 @@
 			
 			var role = $("#role").val();
 			if(role == 'admin'){
-				zTree = $.fn.zTree.init($("#tree_admin"), setting_admin, treeNodes);
+				//zTree = $.fn.zTree.init($("#tree_admin"), setting_admin, treeNodes);
 			}else{
-				zTree = $.fn.zTree.init($("#tree_user"), setting_admin, treeNodes);
+				zTree = $.fn.zTree.init($("#tree_user"), setting_admin);
 			}
 		});
 		

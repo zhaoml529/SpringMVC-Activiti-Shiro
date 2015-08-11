@@ -9,6 +9,7 @@ public class Constants {
 	
 	/***************** session key *****************/
     public static final String CURRENT_USER = "user";
+    public static final String GROUP_ID = "groupId";
     public static final String SESSION_FORCE_LOGOUT_KEY = "session.force.logout";
     
 	/***************** default password (123456) *****************/

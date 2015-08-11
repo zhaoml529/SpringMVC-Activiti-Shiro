@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,7 +40,7 @@ public class Group implements Serializable{
 	@Column(name = "TYPE", length = 20, nullable = false)
 	private String type;
 
-	@OneToMany(targetEntity=User.class,cascade=CascadeType.ALL)
+	@OneToMany(targetEntity=User.class, cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	//updatable=false很关键，如果没有它，在级联删除的时候就会报错(反转的问题)
 	@JoinColumn(name="GROUP_ID",updatable=false)
     private Set<User> user = new HashSet<User>();
