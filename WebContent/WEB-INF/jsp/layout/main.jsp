@@ -24,6 +24,9 @@
 				3、在<span class="label-info"><strong>审批设定</strong></span>界面点击<span class="label-info"><strong>初始化</strong></span>按钮，将每个流程描述文件中的用户任务节点初始化到t_user_task表中，此表是用来保存流程文件中设定好的<br/>
 				   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;审批人员。初始化完成后，逐个设定审批人员（点击设定人员按钮即可）。如果某个流程描述文件新增或减少了用户任务，则点击设定人员后面的加载按钮即可同步节点。<br/>
 			</p>
+			<div>
+			
+			</div>
 		</div>
 	</div>
     

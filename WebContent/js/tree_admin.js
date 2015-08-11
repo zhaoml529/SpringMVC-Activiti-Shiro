@@ -54,6 +54,11 @@ var setting_admin = {
 	}
 }
 
+//所有父节点不显示删除按钮
+function setRemoveBtn(treeId, treeNode) {
+	return !treeNode.isParent;
+}
+
 function beforeRename(treeId, treeNode, newName, isCancel) {
 	if (newName.length == 0) {
         $.messager.alert("提示", "节点名称不能为空!","info", function() {
@@ -250,23 +255,11 @@ function beforeDragOpen(treeId, treeNode) {
 }
 
 function beforeDrop(treeId, treeNodes, targetNode, moveType, isCopy) {
-	className = (className === "dark" ? "":"dark");
-	showLog("[ "+getTime()+" beforeDrop ]&nbsp;&nbsp;&nbsp;&nbsp; moveType:" + moveType);
-	showLog("target: " + (targetNode ? targetNode.name : "root") + "  -- is "+ (isCopy==null? "cancel" : isCopy ? "copy" : "move"));
 	return true;
 }
 
 function onDrag(event, treeId, treeNodes) {
-	className = (className === "dark" ? "":"dark");
-	showLog("[ "+getTime()+" onDrag ]&nbsp;&nbsp;&nbsp;&nbsp; drag: " + treeNodes.length + " nodes." );
 }
 
 function onDrop(event, treeId, treeNodes, targetNode, moveType, isCopy) {
-	className = (className === "dark" ? "":"dark");
-	showLog("[ "+getTime()+" onDrop ]&nbsp;&nbsp;&nbsp;&nbsp; moveType:" + moveType);
-	showLog("target: " + (targetNode ? targetNode.name : "root") + "  -- is "+ (isCopy==null? "cancel" : isCopy ? "copy" : "move"))
-}
-//所有父节点不显示删除按钮
-function setRemoveBtn(treeId, treeNode) {
-	return !treeNode.isParent;
 }
