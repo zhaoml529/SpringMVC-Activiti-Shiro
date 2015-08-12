@@ -28,10 +28,10 @@ public class GroupAndResource implements Serializable {
 	@Column(name = "ID", length = 5, nullable = false, unique = true)
     private Integer id;
 
-    @Column(name = "group_id", length = 50, nullable = false)
+    @Column(name = "group_id", length = 5, nullable = false)
     private Integer groupId;
 
-    @Column(name = "resource_id", length = 50, nullable = false)
+    @Column(name = "resource_id", length = 5, nullable = false)
     private Integer resourceId;
 
     public GroupAndResource() {

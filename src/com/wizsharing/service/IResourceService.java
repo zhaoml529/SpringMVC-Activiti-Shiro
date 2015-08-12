@@ -3,7 +3,6 @@ package com.wizsharing.service;
 import java.io.Serializable;
 import java.util.List;
 
-import com.wizsharing.entity.GroupAndResource;
 import com.wizsharing.entity.Resource;
 import com.wizsharing.pagination.Page;
 

@@ -19,12 +19,14 @@ public class BeanUtils {
 		}
 		return false;
 	}
+	@SuppressWarnings("rawtypes")
 	public static boolean isBlank(List list){
 		if(list == null || list.size()<=0){
 			return true;
 		}
 		return false;
 	}
+	@SuppressWarnings("rawtypes")
 	public static boolean isBlank(Map map){
 		if(map == null || map.size()<=0){
 			return true;

@@ -2,6 +2,7 @@ package test;
 
 import static junit.framework.Assert.assertEquals;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.junit.Test;
@@ -35,7 +36,7 @@ public class UserTest {
 	
     @Test
 	public void userTest() throws Exception{
-    	Group group = this.groupService.getGroupById("10");
+    	Group group = this.groupService.getGroupById("1");
     	assertEquals( group.getName(), "group1" );
     	assertEquals( group.getType(), "group_A" );
     	
@@ -45,10 +46,10 @@ public class UserTest {
 		user.setRegisterDate(new Date());
 		user.setLocked(0);
 		user.setGroup(group);
-//		this.userService.doAdd(user, false);
+		Serializable id = this.userService.doAdd(user, false);
 		
 		//修改密码时判断，原密码是否输入正确
-		User u = this.userService.getUserById(5);
+		User u = this.userService.getUserById((Integer) id);
 		String oldPass = u.getPasswd();
 		
 		u.setPasswd("123");

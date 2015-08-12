@@ -22,16 +22,16 @@ public class GroupTest {
 	
     @Test
 	public void groupTest() throws Exception{
-/*		Group group = new Group();
+		Group group = new Group();
 		group.setName("group1");
 		group.setType("group_A");
-		this.baseService.add(group);
+		this.groupService.doAdd(group);
 		
 		Group group2 = new Group();
 		group2.setName("group2");
 		group2.setType("group_B");
 		
-		this.baseService.add(group2);*/
+		this.groupService.doAdd(group2);
 		
 		List<Group> list = this.groupService.getGroupList();
 		assertEquals(list.size(), 2);

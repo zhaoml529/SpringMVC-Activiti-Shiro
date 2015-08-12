@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wizsharing.entity.Resource;
 import com.wizsharing.entity.User;
-import com.wizsharing.service.IGroupAndResourceService;
 import com.wizsharing.service.IResourceService;
 import com.wizsharing.service.IUserService;
 
@@ -29,9 +28,6 @@ public class MainController {
 	@Autowired
 	private IUserService userService;
 	
-    @Autowired
-    private IGroupAndResourceService grService;
-    
     @Autowired
     private IResourceService resourceService;
 	
