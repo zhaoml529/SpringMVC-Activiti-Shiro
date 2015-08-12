@@ -17,6 +17,9 @@
 <script type="text/javascript" src="${ctx}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/jquery-migrate-1.2.1.min.js"></script>
 
+<link rel="stylesheet" href="${ctx}/css/login/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="${ctx}/css/login/login_main.css" type="text/css" />
+
 <link rel="stylesheet" href="${ctx}/css/zTreeStyle/zTreeStyle.css" type="text/css" />
 <link rel="stylesheet" href="${ctx}/css/themes/<%=easyuiThemeName %>/easyui.css" type="text/css">
 <link rel="stylesheet" type="text/css" href="${ctx}/css/themes/icon.css">
@@ -24,6 +27,10 @@
 
 <script type="text/javascript" src="${ctx}/js/jquery.ztree.all-3.5.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/moment.min.js"></script>
+
+<script type="text/javascript" src="${ctx}/js/login/bootstrap.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/login/templatemo_script.js"></script>
+
 <script type="text/javascript" src="${ctx}/js/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/easyui/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="${ctx}/js/easyui/jqueryUtil.js"></script>
