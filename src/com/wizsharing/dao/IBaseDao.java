@@ -56,7 +56,16 @@ public interface IBaseDao<T> {
 	 * @return: List<T>   
 	 * @throws
 	 */
-	public List<T> createQuery(final String hql) throws Exception;
+	public List<T> find(final String hql) throws Exception;
+	
+	/**
+	 * @Description: 按条件查询
+	 * @param hql
+	 * @param params
+	 * @return
+	 * @throws Exception
+	 */
+	public List<T> find(String hql, Map<String, Object> params) throws Exception;
 	
 	/**
 	 * 
@@ -126,4 +135,5 @@ public interface IBaseDao<T> {
 	 * @throws Exception
 	 */
 	public Integer executeHql(String hql, Map<String, Object> params) throws Exception;
+	
 }

@@ -13,7 +13,7 @@ public interface IResourceService {
 	
 	public Resource getResource(String id) throws Exception;
 	
-	public List<Resource> getMenus(List<GroupAndResource> gr) throws Exception;
+	public List<Resource> getTree(Integer groupId) throws Exception;
 	
 	public List<Resource> getAllResource() throws Exception;
 	
@@ -26,6 +26,8 @@ public interface IResourceService {
 	public Integer doUpdateAvailable(String id) throws Exception;
 	
 	public Integer doUpdateName(String id, String name) throws Exception;
+	
+	public Integer doUpdateSort(String id, String sort) throws Exception;
 	
 	public void doDelete(Resource entity) throws Exception;
 	

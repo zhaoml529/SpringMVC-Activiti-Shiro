@@ -90,6 +90,7 @@
 				<ul id="tree_admin" class="ztree"></ul>
 			</shiro:hasRole>
 		</div>
+		<div id="divSortContent"></div>
 	</div> 
 	<div data-options="region:'south',border:false" style="height:25px;background:#EEE;padding:5px;" href="${ctx }/south"></div>
 	<div data-options="region:'center',plain:true,title:'欢迎使用XXX系统'" style="overflow: hidden;"  href="${ctx }/center"></div>

@@ -14,7 +14,7 @@
 	}
 %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
-<script type="text/javascript" src="${ctx}/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/jquery-migrate-1.2.1.min.js"></script>
 
 <link rel="stylesheet" href="${ctx}/css/zTreeStyle/zTreeStyle.css" type="text/css" />

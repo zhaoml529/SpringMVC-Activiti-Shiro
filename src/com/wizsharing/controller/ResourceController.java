@@ -115,7 +115,7 @@ public class ResourceController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/updateTree", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateTreeName", method = RequestMethod.POST)
 	@ResponseBody
 	public Message doUpdate(@RequestParam(value = "id") String id, @RequestParam("name") String name) throws Exception {
 		Message message = new Message();
@@ -128,6 +128,29 @@ public class ResourceController {
 				message.setStatus(Boolean.FALSE);
 				message.setMessage("您所修改的内容不存在！");
 			}
+		} catch (Exception e) {
+			message.setStatus(Boolean.FALSE);
+			message.setMessage("保存失败！");
+			throw e;
+		}
+		return message;
+	}
+	
+	@RequestMapping(value = "/updateTreeSort", method = RequestMethod.POST)
+	@ResponseBody
+	public Message doUpdateSort(@RequestParam(value = "sortArr", required = false) String sortArr, 
+							@RequestParam(value = "nodeArr", required = false) String nodeArr) throws Exception {
+		Message message = new Message();
+		try {
+			String[] nodes = nodeArr.split(",");
+			String[] sorts = sortArr.split(",");
+			for(int i=0;i<nodes.length;i++){
+				String id = nodes[i];
+				String sortNum = sorts[i];
+				this.resourceService.doUpdateSort(id, sortNum);
+			}
+			message.setStatus(Boolean.TRUE);
+			message.setMessage("顺序已调整！");
 		} catch (Exception e) {
 			message.setStatus(Boolean.FALSE);
 			message.setMessage("保存失败！");

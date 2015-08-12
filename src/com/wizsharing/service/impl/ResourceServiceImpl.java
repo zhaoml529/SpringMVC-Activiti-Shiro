@@ -1,7 +1,7 @@
 package com.wizsharing.service.impl;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wizsharing.dao.IJdbcDao;
-import com.wizsharing.entity.GroupAndResource;
 import com.wizsharing.entity.Resource;
 import com.wizsharing.pagination.Page;
 import com.wizsharing.service.IBaseService;
@@ -31,25 +30,38 @@ public class ResourceServiceImpl implements IResourceService {
 		Resource res = this.baseService.getUnique("Resource", new String[]{"id", "available"}, new String[]{id.toString(), "1"});
 		return res;
 	}
-
+//
+//	@Override
+//	public List<Resource> getMenus(List<GroupAndResource> gr) throws Exception {
+//		List<Resource> menus = new ArrayList<Resource>();
+//		for(GroupAndResource gar : gr){
+//			Resource resource= getPermissions(gar.getResourceId());
+//			if(!BeanUtils.isBlank(resource)){
+//				if(resource.isRootNode()) {
+//	                continue;
+//	            }
+//	            if(!"menu".equals(resource.getType())) {
+//	                continue;
+//	            }
+//	            menus.add(resource);
+//			}
+//		}
+//		
+//		return menus;
+//	}
+	
 	@Override
-	public List<Resource> getMenus(List<GroupAndResource> gr) throws Exception {
-		List<Resource> menus = new ArrayList<Resource>();
-		for(GroupAndResource gar : gr){
-			Resource resource= getPermissions(gar.getResourceId());
-			if(!BeanUtils.isBlank(resource)){
-				if(resource.isRootNode()) {
-	                continue;
-	            }
-	            if(!"menu".equals(resource.getType())) {
-	                continue;
-	            }
-	            menus.add(resource);
-			}
+	public List<Resource> getTree(Integer groupId) throws Exception {
+		if(!BeanUtils.isBlank(groupId)){
+			String hql = "select r from Resource r, GroupAndResource gr where " +
+					     "r.id = gr.resourceId and r.available = 1 and r.type = 'menu' and gr.groupId = "+groupId +
+					     " order by r.parentId, r.sort";
+			return this.baseService.find(hql);
+		}else{
+			return Collections.emptyList();
 		}
-		return menus;
 	}
-
+	
 	@Override
 	public List<Resource> getAllResource() throws Exception {
 		return this.baseService.getAllList("Resource", null, null);
@@ -103,4 +115,15 @@ public class ResourceServiceImpl implements IResourceService {
 		String hql = "update Resource set available=0 where id="+id;
 		return this.baseService.executeHql(hql);
 	}
+
+	@Override
+	public Integer doUpdateSort(String id, String sort) throws Exception {
+		if(!BeanUtils.isBlank(sort)){
+			String hql = "update Resource set sort="+sort.toString()+" where id=" + id;
+			return this.baseService.executeHql(hql);
+		}else{
+			return 0;
+		}
+	}
+
 }

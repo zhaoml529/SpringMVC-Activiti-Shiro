@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.wizsharing.entity.GroupAndResource;
 import com.wizsharing.entity.Resource;
 import com.wizsharing.entity.User;
 import com.wizsharing.service.IGroupAndResourceService;
@@ -61,8 +60,7 @@ public class MainController {
     public List<Resource> getMenu() throws Exception{
     	String username = (String) SecurityUtils.getSubject().getPrincipal();
     	User user = this.userService.getUserByName(username);
-    	List<GroupAndResource> grList = this.grService.getResource(user.getGroup().getId());
-    	List<Resource> menus = this.resourceService.getMenus(grList);
+    	List<Resource> menus = this.resourceService.getTree(user.getGroup().getId());
     	return menus;
     }
     

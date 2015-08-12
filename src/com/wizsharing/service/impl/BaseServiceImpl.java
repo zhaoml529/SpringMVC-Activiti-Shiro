@@ -64,7 +64,7 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
         		}
         	}
         }
-        List<T> list = this.baseDao.createQuery(sff.toString()); 
+        List<T> list = this.baseDao.find(sff.toString()); 
         if(BeanUtils.isBlank(list)){
         	return Collections.emptyList();
         }else{
@@ -120,7 +120,7 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
         	   }
            }
         }
-        List<T> list = this.baseDao.createQuery(sb.toString());  
+        List<T> list = this.baseDao.find(sb.toString());  
         if(BeanUtils.isBlank(list)){
    		    return Collections.emptyList();
         }else{
@@ -163,7 +163,7 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
         sb.append("='").append(values[0]).append("'").append(" and a.").append(columns[1]); 
         sb.append(" BETWEEN '").append(values[1]).append("' and '").append(values[2]).append("'");
         String sub = sb.toString();
-        List<T> list = this.baseDao.createQuery(sub);
+        List<T> list = this.baseDao.find(sub);
         return list.size()>0?list:null;
 	}
 
@@ -239,6 +239,17 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
 	@Override
 	public Integer executeHql(String hql, Map<String, Object> params) throws Exception {
 		return this.baseDao.executeHql(hql, params);
+	}
+
+	@Override
+	public List<T> find(String hql) throws Exception {
+		return this.baseDao.find(hql);
+	}
+
+	@Override
+	public List<T> find(String hql, Map<String, Object> params)
+			throws Exception {
+		return this.baseDao.find(hql, params);
 	}
 	
 }

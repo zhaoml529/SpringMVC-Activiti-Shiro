@@ -29,7 +29,7 @@
 		 <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>   
 	</listener> 
 	 
-	<!-- OpenSessionInViewFilter要放在最上面 -->
+	<!-- OpenSessionInViewFilter要放在最上面，否则延迟加载不起作用。 -->
 	<filter>
 		<filter-name>OpenSessionInViewFilter</filter-name>
 		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>

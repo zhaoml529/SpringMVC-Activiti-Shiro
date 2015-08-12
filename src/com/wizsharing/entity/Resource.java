@@ -51,6 +51,9 @@ public class Resource implements Serializable {
 	@NotNull(message = "{resource.parentId.not.empty}")
     private Integer parentId; 						//父编号
 	
+	@Column(name="sort", length = 2)				//排序编号
+	private Integer sort;
+	
 	@Column(name = "note", length = 300)
     private String note; 							//说明
 	

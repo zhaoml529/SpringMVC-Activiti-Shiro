@@ -52,7 +52,7 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> createQuery(String queryString) throws Exception{
+	public List<T> find(String queryString) throws Exception{
 		List<T> list = this.getSession().createQuery(queryString).list();
 		return list;
 	}
@@ -124,5 +124,17 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 			}
 		}
 		return q.executeUpdate();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> find(String hql, Map<String, Object> params) throws Exception {
+		Query q = this.getSession().createQuery(hql);
+		if (params != null && !params.isEmpty()) {
+			for (String key : params.keySet()) {
+				q.setParameter(key, params.get(key));
+			}
+		}
+		return q.list();
 	}
 }
