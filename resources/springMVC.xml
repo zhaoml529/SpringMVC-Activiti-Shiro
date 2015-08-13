@@ -149,4 +149,8 @@
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
+    
+    <bean id="loginController" class="com.wizsharing.controller.LoginController">
+    	<property name="cacheManager" ref="cacheManager"/>
+    </bean>
 </beans>

@@ -38,7 +38,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
             passwordRetryCache.put(username, retryCount);
         }
         //密码输错3次，显示验证码
-        if(retryCount.incrementAndGet() > Constants.PASSWORD_SHOW_JCAPTCHA ) {
+        if(retryCount.incrementAndGet() == Constants.PASSWORD_SHOW_JCAPTCHA ) {
         	AtomicBoolean enabled = jcaptchaCache.get("jcaptchaEnabled");
         	if(enabled == null) {
         		enabled = new AtomicBoolean(true);

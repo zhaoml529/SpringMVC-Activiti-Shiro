@@ -21,6 +21,6 @@ public class Constants {
 	public static final String CANDIDATE_GROUP = "candidateGroup";
 	
 	/***************** shiro *****************/
-	public static final Integer PASSWORD_RETRY_COUNT = 5;	//登录次数锁定
-	public static final Integer PASSWORD_SHOW_JCAPTCHA = 1;	//登录次数显示验证码
+	public static final Integer PASSWORD_RETRY_COUNT = 5;	//登录次数超过此数时锁定
+	public static final Integer PASSWORD_SHOW_JCAPTCHA = 3;	//登录次超过此数时数显示验证码
 }

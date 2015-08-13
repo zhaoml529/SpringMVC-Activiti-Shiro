@@ -20,6 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LoginController {
 	
+	private Cache<String, AtomicBoolean> jcaptchaCache;
+	
+    public void setCacheManager(CacheManager cacheManager) {
+        this.jcaptchaCache = cacheManager.getCache("jcaptchaCache");
+    }
+	
 	@RequestMapping(value = "/login")
     public String showLoginForm(HttpServletRequest request, Model model) throws ServletException, IOException {
         String exceptionClassName = (String) request.getAttribute("shiroLoginFailure");
@@ -43,6 +49,12 @@ public class LoginController {
         }
         if(request.getParameter("forceLogout") != null) {
         	model.addAttribute("msg", "您已经被管理员强制退出，请重新登录！");
+        }
+        
+        AtomicBoolean enabled = jcaptchaCache.get("jcaptchaEnabled");
+        if(enabled != null){
+        	request.setAttribute("jcaptcha", enabled.get());
+        	System.out.println(enabled.get());
         }
         
         return "login";

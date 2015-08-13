@@ -1,7 +1,6 @@
 package com.wizsharing.shiro.jcaptcha;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -11,8 +10,6 @@ import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
-
-import com.wizsharing.util.Constants;
 
 /**
  * 用于验证码验证的Shiro 过滤器
@@ -29,12 +26,9 @@ public class JCaptchaValidateFilter extends AccessControlFilter {
     
     private Cache<String, AtomicBoolean> jcaptchaCache;
     
-    private Cache<String, AtomicInteger> passwordRetryCache;
-    
     public void setCacheManager(CacheManager cacheManager) {
         this.jcaptchaCache = cacheManager.getCache("jcaptchaCache");
-        this.passwordRetryCache = cacheManager.getCache("passwordRetryCache");
-    }
+    } 
 
     public void setJcaptchaEnabled(boolean jcaptchaEnabled) {
         this.jcaptchaEnabled = jcaptchaEnabled;
@@ -50,8 +44,6 @@ public class JCaptchaValidateFilter extends AccessControlFilter {
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
         //1、设置验证码是否开启属性，页面可以根据该属性来决定是否显示验证码
     	AtomicBoolean enabled = jcaptchaCache.get("jcaptchaEnabled");
-    	String userName = request.getParameter("name");
-    	AtomicInteger retryCount = passwordRetryCache.get(userName);
     	if(enabled == null){
     		enabled = new AtomicBoolean(false);
     	}
@@ -62,9 +54,6 @@ public class JCaptchaValidateFilter extends AccessControlFilter {
         if (enabled.get() == false || !"post".equalsIgnoreCase(httpServletRequest.getMethod())) {
             return true;
         } 
-        else if(enabled.get() == true && retryCount.get() == Constants.PASSWORD_SHOW_JCAPTCHA+1) {
-        	return true;
-        }
         //3、此时是表单提交，验证验证码是否正确
         return JCaptcha.validateResponse(httpServletRequest, httpServletRequest.getParameter(jcaptchaParam));
     }

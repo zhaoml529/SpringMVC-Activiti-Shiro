@@ -45,6 +45,14 @@ public class Group implements Serializable{
 	@JoinColumn(name="GROUP_ID",updatable=false)
     private Set<User> user = new HashSet<User>();
     
+	public Group(){
+		
+	}
+	
+	public Group(Integer id){
+		this.id = id;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
