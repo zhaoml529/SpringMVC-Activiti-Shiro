@@ -19,4 +19,8 @@ public class Constants {
 	public static final String ASSIGNEE = "assignee";
 	public static final String CANDIDATE_USER = "candidateUser";
 	public static final String CANDIDATE_GROUP = "candidateGroup";
+	
+	/***************** shiro *****************/
+	public static final Integer PASSWORD_RETRY_COUNT = 5;	//登录次数锁定
+	public static final Integer PASSWORD_SHOW_JCAPTCHA = 1;	//登录次数显示验证码
 }

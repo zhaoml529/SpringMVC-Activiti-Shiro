@@ -7,6 +7,9 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 
+import com.wizsharing.util.Constants;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -17,9 +20,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
 
     private Cache<String, AtomicInteger> passwordRetryCache;
+    
+    private Cache<String, AtomicBoolean> jcaptchaCache;
 
     public RetryLimitHashedCredentialsMatcher(CacheManager cacheManager) {
         passwordRetryCache = cacheManager.getCache("passwordRetryCache");
+        jcaptchaCache = cacheManager.getCache("jcaptchaCache");
     }
 
     @Override
@@ -31,7 +37,16 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
             retryCount = new AtomicInteger(0);
             passwordRetryCache.put(username, retryCount);
         }
-        if(retryCount.incrementAndGet() > 5) {
+        //密码输错3次，显示验证码
+        if(retryCount.incrementAndGet() > Constants.PASSWORD_SHOW_JCAPTCHA ) {
+        	AtomicBoolean enabled = jcaptchaCache.get("jcaptchaEnabled");
+        	if(enabled == null) {
+        		enabled = new AtomicBoolean(true);
+        		jcaptchaCache.put("jcaptchaEnabled", enabled);
+        	}
+        }
+        //多于5次锁定2分钟
+        if(retryCount.get() > Constants.PASSWORD_RETRY_COUNT) {
             //if retry count > 5 throw
             throw new ExcessiveAttemptsException();
         }
@@ -44,4 +59,5 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
         }
         return matches;
     }
+    
 }

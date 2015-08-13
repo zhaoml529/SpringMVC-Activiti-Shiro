@@ -144,7 +144,7 @@
 </script>
 
 <div id="centerTabs">
-	<div iconCls="icon-home" title="首页" border="false" style="overflow: hidden;">
+	<div title="首页" border="false" style="overflow: hidden;">
 		<iframe src="${ctx }/main" frameborder="0" style="border:0;width:100%;height:99.4%;"></iframe>
 	</div>
 </div>

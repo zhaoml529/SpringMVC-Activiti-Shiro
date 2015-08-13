@@ -12,7 +12,7 @@
     <bean id="cacheManager" class="com.wizsharing.shiro.cache.CacheManagerWrapper">
         <property name="cacheManager" ref="springCacheManager"/>
     </bean>
-
+	
     <!-- 凭证匹配器 -->
     <bean id="credentialsMatcher" class="com.wizsharing.shiro.credentials.RetryLimitHashedCredentialsMatcher">
         <constructor-arg ref="cacheManager"/>
@@ -109,7 +109,8 @@
     
 	<!-- 验证码 -->
     <bean id="jCaptchaValidateFilter" class="com.wizsharing.shiro.jcaptcha.JCaptchaValidateFilter">
-        <property name="jcaptchaEbabled" value="true"/>			<!-- 开启验证码支持 -->
+    	<property name="cacheManager" ref="cacheManager"/>		<!-- 用于保存用户—会话之间的关系的 -->
+        <property name="jcaptchaEnabled" value="true"/>			<!-- 开启验证码支持 -->
         <property name="jcaptchaParam" value="jcaptchaCode"/>	<!-- 前台提交的验证码参数名 -->
         <property name="failureKeyAttribute" value="shiroLoginFailure"/>	<!-- 验证码验证失败后存储到的属性名 -->
     </bean>

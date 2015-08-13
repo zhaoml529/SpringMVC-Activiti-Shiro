@@ -1,6 +1,8 @@
 package com.wizsharing.controller;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.ServletException;
@@ -9,15 +11,18 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.CacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class LoginController {
+	
 	@RequestMapping(value = "/login")
-    public String showLoginForm(HttpServletRequest req, Model model) throws ServletException, IOException {
-        String exceptionClassName = (String) req.getAttribute("shiroLoginFailure");
+    public String showLoginForm(HttpServletRequest request, Model model) throws ServletException, IOException {
+        String exceptionClassName = (String) request.getAttribute("shiroLoginFailure");
         String error = null;
         if(UnknownAccountException.class.getName().equals(exceptionClassName)) {
             error = "用户名不存在！";
@@ -33,12 +38,13 @@ public class LoginController {
             error = "其他错误：" + exceptionClassName;
         }
         model.addAttribute("msg", error);
-        if(req.getParameter("kickout") != null){
+        if(request.getParameter("kickout") != null){
         	model.addAttribute("msg", "您的帐号在另一个地点登录，您已被踢出！");
         }
-        if(req.getParameter("forceLogout") != null) {
+        if(request.getParameter("forceLogout") != null) {
         	model.addAttribute("msg", "您已经被管理员强制退出，请重新登录！");
         }
+        
         return "login";
     }
 }

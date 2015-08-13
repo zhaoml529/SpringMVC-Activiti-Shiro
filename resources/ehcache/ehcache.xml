@@ -69,7 +69,7 @@
            statistics="true">
     </cache>
     
-	<cache name="oaCache"
+	<cache name="jcaptchaCache"
            maxEntriesLocalHeap="2000"
            eternal="false"
            timeToIdleSeconds="0"
