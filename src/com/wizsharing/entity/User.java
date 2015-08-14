@@ -19,6 +19,8 @@ import javax.persistence.TemporalType;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @ClassName: User
  * @Description:用户实体类
@@ -61,6 +63,7 @@ public class User implements Serializable{
 	//多对一，@JoinColumn与@column类似，指定映射的数据库字段
 	@ManyToOne(targetEntity = Group.class, fetch = FetchType.LAZY)
 	@JoinColumn(name="GROUP_ID",updatable=false)
+	@JsonIgnore
     private Group group;
     
 	public User(){

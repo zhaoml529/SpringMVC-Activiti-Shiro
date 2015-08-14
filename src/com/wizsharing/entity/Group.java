@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * 用户组
  * @author ZML
@@ -43,6 +45,7 @@ public class Group implements Serializable{
 	@OneToMany(targetEntity=User.class, cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	//updatable=false很关键，如果没有它，在级联删除的时候就会报错(反转的问题)
 	@JoinColumn(name="GROUP_ID",updatable=false)
+	@JsonIgnore
     private Set<User> user = new HashSet<User>();
     
 	public Group(){

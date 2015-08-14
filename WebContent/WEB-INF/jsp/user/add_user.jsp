@@ -5,7 +5,7 @@
 $(function(){
 	$("#group").combobox({
 		width:160,
-		url:ctx+"/groupAction/getAllGroup",
+		url:ctx+"/group/getAllGroup",
 		valueField: 'id',
 		textField: 'name',
 		onSelect:function(value){
@@ -16,6 +16,22 @@ $(function(){
             $("#group").combobox('setValue',data[0].id);
         }
 	});
+	//扩展easyui的validatebox
+    $.extend($.fn.validatebox.defaults.rules, {
+       /*必须和某个字段相等*/
+       equalTo: {
+    	   validator: function (value, param) { 
+    		   return $(param[0]).val() == value; 
+    	   }, 
+    	   message: '字段不匹配' 
+       },
+	   minLength: {
+		   validator: function(value, param){
+			   return value.length >= param[0];
+		   },
+		   message: '至少输入 {0} 个字符.'
+	   }	
+    });
 })
 </script>
 <style type="text/css">
@@ -43,7 +59,7 @@ $(function(){
 </style>
 
 <div id="dlg" class="easyui-layout" style="padding:10px 20px">
-    <div class="ftitle"><img src="${ctx }/extend/fromedit.png" style="margin-bottom: -3px;"/> 用户信息</div>
+    <div class="ftitle"><img src="${ctx }/images/fromedit.png" style="margin-bottom: -3px;"/> 用户信息</div>
     <form id="user_form" method="post" >
         <div class="fitem">
             <label>用户名:</label>
@@ -52,13 +68,13 @@ $(function(){
         <div class="fitem">
             <label>密码:</label>
             <input type="password" id="passwd"
-                   name="passwd" class="easyui-textbox easyui-validatebox" maxLength="36"
-                   data-options="required:true,missingMessage:'请输入密码.',validType:['minLength[1]']">
+                   name="passwd" class="easyui-textbox easyui-validatebox"  required="true"
+                   missingMessage="请输入密码." validType="minLength[3]" >
         </div>
         <div class="fitem">
             <label>确认密码:</label>
             <input type="password" id="repasswd"
-                   name="repasswd" class="easyui-textbox easyui-validatebox" required="true"
+                   name="repasswd" class="easyui-textbox" required="true"
                    missingMessage="请再次填写密码." validType="equalTo['#passwd']"
                    invalidMessage="两次输入密码不匹配.">
         </div>

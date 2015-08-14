@@ -75,9 +75,10 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
 	@Override
 	public T getUnique(String tableSimpleName, String[] columns, String[] values) throws Exception{
 		StringBuffer sb = new StringBuffer();  
-        sb.append("select a from ").append(tableSimpleName).append( " a where ");  
+        sb.append("select a from ").append(tableSimpleName).append(" a ");  
         if(columns != null && values != null){
         	if(columns.length > 0 && columns.length==values.length){  
+        		sb.append( " where ");
                 for(int i = 0; i < columns.length; i++){  
                     sb.append("a.").append(columns[i]).append("='").append(values[i]).append("'");  
                     if(i < columns.length-1){  
@@ -98,9 +99,10 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
 	public List<T> findByWhere(String tableSimpleName, String[] columns,
 			String[] values, String[] orderBy, String[] orderType) throws Exception{
 		StringBuffer sb = new StringBuffer();  
-        sb.append("select a from ").append(tableSimpleName).append( " a where ");  
+        sb.append("select a from ").append(tableSimpleName).append(" a ");  
         if(columns != null && values != null){
         	if(columns.length > 0 && columns.length==values.length){  
+        		sb.append( " where ");
                 for(int i = 0; i < columns.length; i++){  
      	            sb.append("a.").append(columns[i]).append("='").append(values[i]).append("'");  
      	            if(i < columns.length-1){  
@@ -131,10 +133,10 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
 	@Override
 	public Integer getCount(String tableSimpleName, String[] columns, String[] values) throws Exception{
 		StringBuffer sb = new StringBuffer();
-		sb.append("select count(*) from ").append(tableSimpleName);
+		sb.append("select count(*) from ").append(tableSimpleName).append(" a ");
 		if(columns != null && values != null){
 			if(columns.length > 0 && columns.length == values.length){
-				sb.append( " a where ");
+				sb.append( " where ");
 				for(int i = 0; i < columns.length; i++){  
 		            sb.append("a.").append(columns[i]).append("='").append(values[i]).append("'");  
 		            if(i < columns.length-1){  
@@ -184,20 +186,26 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
 			throws Exception {
 		Integer totalSum = 0;
 		List<T> list = new ArrayList<T>();
-		if(columns.length <= 0 && values.length <= 0){
-			list = getAllList(tableSimpleName, orderBy, orderType);
+		if(columns != null && values != null){
+        	if(columns.length > 0 && columns.length==values.length){  
+        		list = findByWhere(tableSimpleName, columns, values, orderBy, orderType);
+        	}else{
+        		list = getAllList(tableSimpleName, orderBy, orderType);
+        	}
 		}else{
-			list = findByWhere(tableSimpleName, columns, values, orderBy, orderType);
+			list = getAllList(tableSimpleName, orderBy, orderType);
 		}
+		
 		if(!BeanUtils.isBlank(list)){
 			totalSum = list.size();
 		}
 		int[] pageParams = page.getPageParams(totalSum);
 		
 		StringBuffer sb = new StringBuffer();  
-        sb.append("select a from ").append(tableSimpleName).append( " a where ");  
+        sb.append("select a from ").append(tableSimpleName).append(" a ");  
         if(columns != null && values != null){
         	if(columns.length > 0 && columns.length==values.length){  
+        		sb.append( " where ");
                 for(int i = 0; i < columns.length; i++){  
      	            sb.append("a.").append(columns[i]).append("='").append(values[i]).append("'");  
      	            if(i < columns.length-1){  
@@ -206,6 +214,12 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
                 }  
         	}
         }
+        
+//        String hql = sb.toString();
+//        if(hql.endsWith("where ")){
+//    	    hql = hql.substring(0, hql.length()-6);
+//        }
+        
         if(orderBy != null && orderType != null){
            if(orderBy.length > 0 && orderBy.length == orderType.length){
         	   sb.append(" order by ");
@@ -217,10 +231,9 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
         	   }
            }
         }
+        
         String hql = sb.toString();
-        if(hql.endsWith("where ")){
-    	    hql = hql.substring(0, hql.length()-6);
-        }
+        
         logger.info("findByPage: HQL: "+hql);
         list = this.baseDao.findByPage(hql, pageParams[0], pageParams[1]); 
         if( list.size()>0 ){

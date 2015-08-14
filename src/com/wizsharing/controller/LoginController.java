@@ -2,7 +2,6 @@ package com.wizsharing.controller;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.ServletException;
@@ -51,10 +50,10 @@ public class LoginController {
         	model.addAttribute("msg", "您已经被管理员强制退出，请重新登录！");
         }
         
+        //前台是否显示验证码
         AtomicBoolean enabled = jcaptchaCache.get("jcaptchaEnabled");
         if(enabled != null){
         	request.setAttribute("jcaptcha", enabled.get());
-        	System.out.println(enabled.get());
         }
         
         return "login";

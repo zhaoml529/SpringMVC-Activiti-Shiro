@@ -37,6 +37,7 @@ import com.wizsharing.entity.User;
 import com.wizsharing.pagination.Page;
 import com.wizsharing.service.IGroupService;
 import com.wizsharing.service.IUserService;
+import com.wizsharing.service.impl.PasswordHelper;
 import com.wizsharing.shiro.realm.UserRealm;
 import com.wizsharing.util.BeanUtils;
 import com.wizsharing.util.Constants;
@@ -48,8 +49,13 @@ public class UserController {
 
 	@Autowired
 	private IUserService userService;
+	
 	@Autowired
 	private IGroupService groupService;
+	
+    @Autowired
+    private PasswordHelper passwordHelper;
+	
 	@Autowired
     private SessionDAO sessionDAO;
 	
@@ -78,6 +84,7 @@ public class UserController {
 		List<Object> jsonList=new ArrayList<Object>(); 
 		for(User user : userList){
 			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("id", user.getId());
 			map.put("name", user.getName());
 			map.put("passwd", user.getPasswd());
 			map.put("registerDate", user.getRegisterDate());
@@ -143,7 +150,7 @@ public class UserController {
 		String salt = request.getParameter("salt");
 		String name = request.getParameter("name");
 		String registerDate = request.getParameter("registerDate");
-		String passwd = request.getParameter("passwd");
+		String passwd = request.getParameter("newPasswd");
 		String groupId = request.getParameter("group.id");
 		String locked = request.getParameter("locked");
 		Message message = new Message();
@@ -385,6 +392,34 @@ public class UserController {
 		}
 		Datagrid<Object> dataGrid = new Datagrid<Object>(p.getTotal(), jsonList);
 		return dataGrid;
+		
+	}
+	
+	@RequestMapping(value = "/validPasswd", method = RequestMethod.POST)
+	@ResponseBody
+	public Message validPasswd(@RequestParam("userId") Integer userId, @RequestParam("passwd") String passwd) throws Exception {
+		Message message = new Message();
+		User u = this.userService.getUserById(userId);
+		if(!BeanUtils.isBlank(u)){
+			String oldPass = u.getPasswd();
+			
+			u.setPasswd(passwd);
+			this.passwordHelper.encryptPassword(u);
+			String newPass = u.getPasswd();
+			
+			if(newPass.equals(oldPass)){
+				message.setStatus(Boolean.TRUE);
+				message.setMessage("原密码与用户输入密码一致！");
+			}else{
+				message.setStatus(Boolean.FALSE);
+				message.setMessage("原密码与用户输入密码不一致！");
+			}
+		}else{
+			message.setStatus(Boolean.FALSE);
+			message.setMessage("用户不存在！");
+		}
+		
+		return message;
 		
 	}
 }

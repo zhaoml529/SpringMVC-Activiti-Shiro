@@ -10,7 +10,7 @@
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<script type="text/javascript" src="${ctx}/js/app/user.js?_=${sysInitTime}"></script>
+	<script type="text/javascript" src="${ctx}/js/app/user.js"></script>
   </head>
   <body>
 	<div class="well well-small" style="margin-left: 5px;margin-top: 5px">
