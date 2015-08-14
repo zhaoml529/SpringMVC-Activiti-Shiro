@@ -397,6 +397,13 @@ public class UserController {
 		
 	}
 	
+	/**
+	 * 修改密码时验证原密码是否输入正确
+	 * @param userId
+	 * @param passwd
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/validPasswd", method = RequestMethod.POST)
 	@ResponseBody
 	public Message validPasswd(@RequestParam("userId") Integer userId, @RequestParam("passwd") String passwd) throws Exception {
@@ -422,6 +429,14 @@ public class UserController {
 		}
 		
 		return message;
-		
+	}
+	
+	/**
+	 * 跳转到查询页面
+	 * @return
+	 */
+	@RequestMapping(value = "/userSearch", method = RequestMethod.GET)
+	public String userSearch(){
+		return "user/search";
 	}
 }

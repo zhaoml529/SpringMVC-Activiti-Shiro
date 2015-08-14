@@ -46,18 +46,24 @@ $(function() {
             var obj = eval('('+str+')');
             user_datagrid.datagrid('reload',obj); 
 	    }
-	   
 	});
 });
 
+//高级搜索 del row
+function userSearchRemove(curr) {
+	$(curr).closest('tr').remove();
+}
+//高级查询
+function  userSearch() {
+	jqueryUtil.gradeSearch(user_datagrid, "#userSearch", "/user/userSearch");
+}
+
 //修正宽高
-function fixHeight(percent)   
-{   
+function fixHeight(percent) {   
 	return parseInt($(this).height() * percent);
 }
 
-function fixWidth(percent)   
-{   
+function fixWidth(percent) {   
 	return parseInt(($(this).width() - 50) * percent);
 }
 

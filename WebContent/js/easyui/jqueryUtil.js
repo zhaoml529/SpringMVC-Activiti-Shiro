@@ -372,8 +372,6 @@
 			}
 		});
 		
-		
-		
 		/**
 		 * 级联选择父节点
 		 * @param {Object} target
@@ -515,10 +513,10 @@
         	return str;
         };
         
-      //高级查询
+        //高级查询
         jqueryUtil.gradeSearch=function($dg,formId,url) {
 			$("<div/>").dialog({
-				href : url,
+				href : ctx+url,
 				modal : true,
 				title : '高级查询',
 				top : 120,
@@ -542,6 +540,7 @@
 					iconCls : 'icon-cancel',
 					handler : function() {
 						$(this).closest('.window-body').dialog('destroy');
+						//$(this).dialog('destroy');
 					}
 				} ],
 				onClose : function() {
