@@ -34,8 +34,20 @@
 						<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="del();">删除</a>|
 						<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-reload" plain="true" onclick="sync();">同步用户</a>
 					</shiro:hasRole>
+				</td>
+				<td style="padding-left:5px">
+					<input id="searchbox" type="text"/>
+				</td>
+				<td style="padding-left:2px">
+					<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="userSearch();">高级查询</a>
+				</td>
 			</tr>
 		</table>
+	</div>
+	<div id="searchMenu">
+		<div name="name">用户名</div>
+		<div name="id">用户编号</div>
+		<div name="registerDate">注册日期</div>
 	</div>
 	<table id="user_datagrid" title="用户管理"></table>
   </body>

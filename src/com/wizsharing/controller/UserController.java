@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.wizsharing.entity.BaseVO;
 import com.wizsharing.entity.Datagrid;
 import com.wizsharing.entity.Group;
 import com.wizsharing.entity.Message;
@@ -78,8 +79,9 @@ public class UserController {
 	 */
 	@RequestMapping("/toList")
 	@ResponseBody
-	public Datagrid<Object> userList(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "rows", required = false) Integer rows) throws Exception{
-		Page<User> p = new Page<User>(page, rows);
+	public Datagrid<Object> userList(BaseVO base) throws Exception{
+		Page<User> p = new Page<User>(base.getPage(), base.getRows());
+		System.out.println(base.getSearchName()+"---"+base.getSearchValue());
 		List<User> userList = this.userService.getUserList(p);
 		List<Object> jsonList=new ArrayList<Object>(); 
 		for(User user : userList){

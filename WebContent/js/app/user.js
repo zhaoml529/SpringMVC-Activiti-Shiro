@@ -38,17 +38,16 @@ $(function() {
         toolbar: "#toolbar"
     });
     
-    //搜索框
-/*    $("#searchbox").searchbox({ 
-    	menu:"#mm", 
-    	prompt :'模糊查询',
-    	searcher:function(value,name){   
-    		var str="{\"searchName\":\""+name+"\",\"searchValue\":\""+value+"\"}";
-    		var obj = eval('('+str+')');
-    		$dg.datagrid('reload',obj); 
-    	}
-    
-    });*/
+	$("#searchbox").searchbox({ 
+		menu:"#searchMenu", 
+		prompt :'模糊查询',
+	    searcher:function(value,name){   
+	    	var str="{\"searchName\":\""+name+"\",\"searchValue\":\""+value+"\"}";
+            var obj = eval('('+str+')');
+            user_datagrid.datagrid('reload',obj); 
+	    }
+	   
+	});
 });
 
 //修正宽高
