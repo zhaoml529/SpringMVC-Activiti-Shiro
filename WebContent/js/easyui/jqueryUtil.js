@@ -265,7 +265,7 @@
 		};
 		//序列化表单到对象
 		jqueryUtil.serializeObject = function(form) {
-			//console.dir(form.serializeArray());
+			console.dir(form.serializeArray());
 			var o = {};
 			$.each(form.serializeArray(), function(index) {
 				if (o[this['name']]) {
@@ -274,7 +274,8 @@
 					o[this['name']] = this['value']==''?' ':this['value'];
 				}
 			});
-			//console.dir(o);
+			console.dir(o);
+			alert(o);
 			return o;
 		};
 		/*$.extend($.fn.datagrid.defaults.editors, {

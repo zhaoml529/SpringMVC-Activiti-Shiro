@@ -70,7 +70,7 @@ public class JdbcDaoImpl implements IJdbcDao {
 		Integer totalSum = 0;
 		String countSql = "SELECT COUNT(1) FROM (" + sql + ") TEMP_TABLE_";
 		totalSum = this.getCount(countSql, paramMap);
-		int[] pageParams = page.getPageParams(totalSum);
+		int[] pageParams = page.getPageParams(Long.valueOf(totalSum));
 		if(totalSum == 0){
 			return Collections.emptyList();
 		}

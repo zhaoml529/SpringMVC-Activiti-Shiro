@@ -108,7 +108,7 @@ public class UserRealm extends AuthorizingRealm{
             throw new UnknownAccountException();//没找到帐号
         }
 
-        if(Boolean.TRUE.equals(user.getLocked())) {
+        if(user.getIsDelete() == 1) {
             throw new LockedAccountException(); //帐号锁定
         }
         //Authenticator的职责是验证用户帐号，是Shiro API中身份验证核心的入口点

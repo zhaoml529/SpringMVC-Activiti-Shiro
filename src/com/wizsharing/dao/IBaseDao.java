@@ -117,7 +117,7 @@ public interface IBaseDao<T> {
 	 * @return
 	 * @throws Exception
 	 */
-	public Integer getCount(final String hql) throws Exception;
+	public Long getCount(final String hql) throws Exception;
 	
 	/**
 	 * 执行HQL语句

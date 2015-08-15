@@ -21,8 +21,8 @@ $(function() {
         columns : [ 
             [ 
               {field : 'name',title : '用户名',width : fixWidth(0.2),align : 'left',sortable: true},
-              {field : 'passwd',title : '密码',width : fixWidth(0.2),align : 'left',editor : {type:'validatebox',options:{required:true}}},
-              {field : 'registerDate', title : '注册时间', width : fixWidth(0.2), editor : "datebox"},
+              {field : 'passwd',title : '密码',width : fixWidth(0.2),align : 'left'},
+              {field : 'registerDate', title : '注册时间', width : fixWidth(0.2),sortable: true},
               {field : 'locked',title : '状态',width : fixWidth(0.2),
             	  formatter:function(value,row){
             		  if("0"==row.locked){

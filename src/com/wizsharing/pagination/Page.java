@@ -16,7 +16,7 @@ public class Page<T> {
 	private Integer page;
 	private Integer rows;
 	
-	private Integer total;
+	private Long total=0L;
 	private List<T> result = Collections.emptyList();
 	
 	public Page(){
@@ -46,11 +46,11 @@ public class Page<T> {
 	public void setResult(List<T> result) {
 		this.result = result;
 	}
-	public Integer getTotal() {
+	public Long getTotal() {
 		return total;
 	}
 
-	public void setTotal(Integer total) {
+	public void setTotal(Long total) {
 		this.total = total;
 	}
 
@@ -59,7 +59,7 @@ public class Page<T> {
 	 * @param total
 	 * @return
 	 */
-	public int[] getPageParams(Integer total) {
+	public int[] getPageParams(Long total) {
 		if(this.page == null || this.page < 1){
 			this.page = 1;
 		}

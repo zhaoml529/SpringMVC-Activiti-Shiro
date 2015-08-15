@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.wizsharing.entity.BaseVO;
+import com.wizsharing.entity.Parameter;
 import com.wizsharing.entity.Datagrid;
 import com.wizsharing.entity.Group;
 import com.wizsharing.entity.Message;
@@ -79,10 +79,11 @@ public class UserController {
 	 */
 	@RequestMapping("/toList")
 	@ResponseBody
-	public Datagrid<Object> userList(BaseVO base) throws Exception{
-		Page<User> p = new Page<User>(base.getPage(), base.getRows());
-		System.out.println(base.getSearchName()+"---"+base.getSearchValue());
-		List<User> userList = this.userService.getUserList(p);
+	public Datagrid<Object> userList(Parameter param) throws Exception{
+		Page<User> page = new Page<User>(param.getPage(), param.getRows());
+		System.out.println(param.getSearchName()+"---"+param.getSearchValue());
+//		List<User> userList = this.userService.getUserList(p);
+		List<User> userList = this.userService.getUserList(param, page);
 		List<Object> jsonList=new ArrayList<Object>(); 
 		for(User user : userList){
 			Map<String, Object> map=new HashMap<String, Object>();
@@ -90,11 +91,11 @@ public class UserController {
 			map.put("name", user.getName());
 			map.put("passwd", user.getPasswd());
 			map.put("registerDate", user.getRegisterDate());
-			map.put("locked", user.getLocked());
+			map.put("locked", user.getIsDelete());
 			map.put("group_name", user.getGroup().getName());
 			jsonList.add(map);
 		}
-		return new Datagrid<Object>(p.getTotal(), jsonList);
+		return new Datagrid<Object>(page.getTotal(), jsonList);
 	}
 	
 	/**
@@ -162,7 +163,7 @@ public class UserController {
 			user.setName(name);
 			user.setSalt(salt);
 			user.setPasswd(passwd);
-			user.setLocked(new Integer(locked));
+			user.setIsDelete(new Integer(locked));
 			if(StringUtils.isNotEmpty(groupId)){
 				user.setGroup(new Group(new Integer(groupId)));
 			}else{

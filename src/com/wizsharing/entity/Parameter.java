@@ -1,10 +1,12 @@
 package com.wizsharing.entity;
 
-public class BaseVO {
+public class Parameter {
 	private String searchName;
 	private String searchValue;
 	private Integer page;
 	private Integer rows;
+	private String sort; 
+	private String order;
 	private String searchAnds;
 	private String searchColumnNames;
 	private String searchConditions;
@@ -56,6 +58,18 @@ public class BaseVO {
 	}
 	public void setSearchVals(String searchVals) {
 		this.searchVals = searchVals;
+	}
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+	public String getOrder() {
+		return order;
+	}
+	public void setOrder(String order) {
+		this.order = order;
 	}
 	
 }

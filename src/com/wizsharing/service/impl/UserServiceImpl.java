@@ -1,7 +1,9 @@
 package com.wizsharing.service.impl;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.UserQuery;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wizsharing.entity.Group;
+import com.wizsharing.entity.Parameter;
 import com.wizsharing.entity.User;
 import com.wizsharing.pagination.Page;
 import com.wizsharing.service.IActivitiIdentityService;
@@ -283,5 +286,13 @@ public class UserServiceImpl implements IUserService {
     private void updateMembership(User user) throws Exception{
     	this.activitIdentityService.updateMembership(user.getId().toString(), user.getGroup().getId().toString());
     }
+
+	@Override
+	public List<User> getUserList(Parameter param, Page<User> page) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("id", "1");
+		List<User> list = this.baseService.findListPage("User", param, map, page);
+		return list;
+	}
 
 }

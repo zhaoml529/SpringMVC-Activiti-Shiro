@@ -3,12 +3,15 @@ package com.wizsharing.service;
 import java.io.Serializable;
 import java.util.List;
 
+import com.wizsharing.entity.Parameter;
 import com.wizsharing.entity.User;
 import com.wizsharing.pagination.Page;
 
 public interface IUserService {
 
 	public List<User> getUserList(Page<User> page) throws Exception;
+	
+	public List<User> getUserList(Parameter param, Page<User> page) throws Exception;
 	
 	public User getUserByName(String user_name) throws Exception;
 

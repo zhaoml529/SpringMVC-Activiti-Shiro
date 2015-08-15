@@ -40,23 +40,34 @@ public class UserTest {
     	assertEquals( group.getName(), "group1" );
     	assertEquals( group.getType(), "group_A" );
     	
-		User user = new User();
-		user.setName("admin");
-		user.setPasswd("123");
-		user.setRegisterDate(new Date());
-		user.setLocked(0);
-		user.setGroup(group);
-		Serializable id = this.userService.doAdd(user, false);
+		User user1 = new User();
+		user1.setName("admin");
+		user1.setPasswd("123");
+		user1.setRegisterDate(new Date());
+		user1.setIsDelete(0);
+		user1.setGroup(group);
+		Serializable id1 = this.userService.doAdd(user1, false);
+		
+		for(int i=0; i<10; i++){
+			User user = new User();
+			user.setName("user"+i);
+			user.setPasswd("123");
+			user.setRegisterDate(new Date());
+			user.setIsDelete(0);
+			user.setGroup(group);
+			Serializable id = this.userService.doAdd(user, false);
+		}
+		
 		
 		//修改密码时判断，原密码是否输入正确
-		User u = this.userService.getUserById((Integer) id);
-		String oldPass = u.getPasswd();
-		
-		u.setPasswd("123");
-		this.passwordHelper.encryptPassword(u);
-		
-        String newPass = u.getPasswd(); 
-        assertEquals(oldPass, newPass);
+//		User u = this.userService.getUserById((Integer) id);
+//		String oldPass = u.getPasswd();
+//		
+//		u.setPasswd("123");
+//		this.passwordHelper.encryptPassword(u);
+//		
+//        String newPass = u.getPasswd(); 
+//        assertEquals(oldPass, newPass);
 	}
     
 }

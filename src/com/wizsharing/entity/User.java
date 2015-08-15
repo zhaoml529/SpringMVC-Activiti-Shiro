@@ -57,8 +57,8 @@ public class User implements Serializable{
 	@Column(name = "REG_DATE")
 	private Date registerDate;
 	
-	@Column(name = "LOCKED", length = 2, nullable = false)
-    private Integer locked;
+	@Column(name = "IS_DELETE", length = 2, nullable = false)
+    private Integer isDelete;
 	
 	//多对一，@JoinColumn与@column类似，指定映射的数据库字段
 	@ManyToOne(targetEntity = Group.class, fetch = FetchType.LAZY)
@@ -131,15 +131,15 @@ public class User implements Serializable{
 		this.salt = salt;
 	}
 
-	public Integer getLocked() {
-		return locked;
+    public Integer getIsDelete() {
+		return isDelete;
 	}
 
-	public void setLocked(Integer locked) {
-		this.locked = locked;
+	public void setIsDelete(Integer isDelete) {
+		this.isDelete = isDelete;
 	}
-	
-    public String getCredentialsSalt() {
+
+	public String getCredentialsSalt() {
         return name + salt;
     }
 }

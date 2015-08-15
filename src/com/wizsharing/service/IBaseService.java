@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import com.wizsharing.entity.Parameter;
 import com.wizsharing.pagination.Page;
 
 public interface IBaseService<T> {
@@ -12,7 +13,7 @@ public interface IBaseService<T> {
 	 
 	public T getUnique(String tableSimpleName,String[] columns,String[] values) throws Exception;
 	 
-	public Integer getCount(String tableSimpleName, String[] columns, String[] values) throws Exception;
+	public Long getCount(String tableSimpleName, String[] columns, String[] values) throws Exception;
 	 
 	public Serializable add(T bean) throws Exception;
 	 
@@ -94,4 +95,25 @@ public interface IBaseService<T> {
 	 * @throws Exception
 	 */
 	public List<T> find(String hql, Map<String, Object> params) throws Exception;
+	
+	/**
+	 * 条件查询分页
+	 * @param tableSimpleName
+	 * @param param
+	 * @param map
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	public List<T> findListPage(String tableSimpleName, Parameter param, Map<String, Object> map, Page<T> page) throws Exception;
+	
+	/**
+	 * 获取数量
+	 * @param tableSimpleName
+	 * @param param
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
+	public Long getCount(String tableSimpleName, Parameter param, Map<String, Object> map) throws Exception;
 }

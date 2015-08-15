@@ -104,10 +104,9 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 	}
 
 	@Override
-	public Integer getCount(String hql) throws Exception {
+	public Long getCount(String hql) throws Exception {
 		Query query = this.getSession().createQuery(hql);
-		int count=(int)((long)query.uniqueResult());
-	    return Integer.valueOf(count);
+	    return (Long) query.uniqueResult();
 	}
 
 	@Override
