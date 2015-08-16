@@ -28,7 +28,9 @@ public class ResourceServiceImpl implements IResourceService {
     
 	@Override
 	public Resource getPermissions(Integer id) throws Exception {
-		Resource res = this.baseService.getUnique("Resource", new String[]{"id", "available"}, new String[]{id.toString(), "1"});
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		Resource res = this.baseService.findUnique("Resource", map);
 		return res;
 	}
 	
@@ -46,7 +48,7 @@ public class ResourceServiceImpl implements IResourceService {
 	
 	@Override
 	public List<Resource> getAllResource() throws Exception {
-		return this.baseService.getAllList("Resource", null, null);
+		return this.baseService.findByWhere("Resource", null);
 	}
 
 	@Override
@@ -57,7 +59,9 @@ public class ResourceServiceImpl implements IResourceService {
 	
 	@Override
 	public Resource getResource(String id) throws Exception{
-		return this.baseService.getUnique("Resource", new String[]{"id"}, new String[]{id});
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		return this.baseService.findUnique("Resource", map);
 	}
 
 	@Override

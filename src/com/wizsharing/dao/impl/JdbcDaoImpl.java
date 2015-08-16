@@ -27,6 +27,7 @@ public class JdbcDaoImpl implements IJdbcDao {
 
 	@Autowired
     private JdbcTemplate jdbcTemplate;
+	
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	

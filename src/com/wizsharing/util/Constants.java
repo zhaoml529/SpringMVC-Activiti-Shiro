@@ -1,5 +1,7 @@
 package com.wizsharing.util;
 
+import java.util.UUID;
+
 public class Constants {
 	
 	/***************** system ******************/
@@ -23,7 +25,7 @@ public class Constants {
 	public static final Integer PASSWORD_RETRY_COUNT = 5;	//登录次数超过此数时锁定
 	public static final Integer PASSWORD_SHOW_JCAPTCHA = 3;	//登录次超过此数时数显示验证码
 	
-	/***************** service *******************/
-	public static final String IS_DOT= ".";
-	
+	public static String getPrimaryKeyByUUID(){
+		return UUID.randomUUID().toString();
+	} 
 }

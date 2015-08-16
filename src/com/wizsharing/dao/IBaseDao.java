@@ -99,7 +99,7 @@ public interface IBaseDao<T> {
 	 * @return: T   
 	 * @throws
 	 */
-	public T unique(final String hql) throws Exception;
+	public T unique(final String hql, Map<String, Object> params) throws Exception;
 	
 	/**
 	 * 获取数量

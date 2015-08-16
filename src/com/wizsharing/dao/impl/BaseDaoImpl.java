@@ -1,17 +1,12 @@
 package com.wizsharing.dao.impl;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -75,8 +70,13 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public T unique(String hql) throws Exception{
+	public T unique(String hql, Map<String, Object> params) throws Exception{
 		Query query = this.getSession().createQuery(hql);
+		if (params != null && !params.isEmpty()) {
+			for (String key : params.keySet()) {
+				query.setParameter(key, params.get(key));
+			}
+		}
 	    return (T) query.uniqueResult();
 	}
 
@@ -93,24 +93,24 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 
 	@Override
 	public Integer executeHql(String hql, Map<String, Object> params) throws Exception {
-		Query q = this.getSession().createQuery(hql);
+		Query query = this.getSession().createQuery(hql);
 		if (params != null && !params.isEmpty()) {
 			for (String key : params.keySet()) {
-				q.setParameter(key, params.get(key));
+				query.setParameter(key, params.get(key));
 			}
 		}
-		return q.executeUpdate();
+		return query.executeUpdate();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> find(String hql, Map<String, Object> params) throws Exception {
-		Query q = this.getSession().createQuery(hql);
+		Query query = this.getSession().createQuery(hql);
 		if (params != null && !params.isEmpty()) {
 			for (String key : params.keySet()) {
-				q.setParameter(key, params.get(key));
+				query.setParameter(key, params.get(key));
 			}
 		}
-		return q.list();
+		return query.list();
 	}
 }

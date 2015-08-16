@@ -1,7 +1,9 @@
 package com.wizsharing.service.impl;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,13 +44,14 @@ public class GroupServiceImpl implements IGroupService {
 
 	@Override
 	public List<Group> getGroupList() throws Exception {
-		List<Group> list = this.baseService.getAllList("Group", null, null);
-		return list;
+		return this.baseService.findByWhere("Group", null);
 	}
 
 	@Override
 	public Group getGroupById(String id) throws Exception {
-		return this.baseService.getUnique("Group", new String[]{"id"}, new String[]{id});
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		return this.baseService.findUnique("Group", map);
 	}
 
 }

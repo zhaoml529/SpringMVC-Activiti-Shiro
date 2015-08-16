@@ -57,6 +57,7 @@ public class JCaptchaValidateFilter extends AccessControlFilter {
         //3、此时是表单提交，验证验证码是否正确
         return JCaptcha.validateResponse(httpServletRequest, httpServletRequest.getParameter(jcaptchaParam));
     }
+    
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         //如果验证码失败了，存储失败key属性

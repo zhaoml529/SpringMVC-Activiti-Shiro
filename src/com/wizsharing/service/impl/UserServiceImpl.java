@@ -56,7 +56,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User getUserByName(String user_name) throws Exception{
-		User user = this.baseService.getUnique("User", new String[]{"name"}, new String[] {user_name});
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", user_name);
+		User user = this.baseService.findUnique("User", map);
 		if(BeanUtils.isBlank(user)){
 			return null;
 		}else{
@@ -77,7 +79,9 @@ public class UserServiceImpl implements IUserService {
 	
 	@Override
 	public User getUserById(Integer id) throws Exception {
-		return this.baseService.getUnique("User", new String[]{"id"}, new String[]{id.toString()});
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		return this.baseService.findUnique("User", map);
 	}
 
 	@Override
@@ -265,7 +269,7 @@ public class UserServiceImpl implements IUserService {
      * @throws Exception 
      */
     private void synUserWithRoleToActiviti() throws Exception {
-        List<User> allUser = this.baseService.getAllList("User",null , null);
+        List<User> allUser = this.baseService.findByWhere("User", null);
         for (User user : allUser) {
             String userId = user.getId().toString();
             String groupId = user.getGroup().getId().toString();

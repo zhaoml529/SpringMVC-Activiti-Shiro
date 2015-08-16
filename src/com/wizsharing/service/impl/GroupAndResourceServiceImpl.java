@@ -1,6 +1,5 @@
 package com.wizsharing.service.impl;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +23,10 @@ public class GroupAndResourceServiceImpl implements IGroupAndResourceService {
 	 
 	@Override
 	public List<GroupAndResource> getResource(Integer groupId) throws Exception {
-		List<GroupAndResource> list = this.baseService.findByWhere("GroupAndResource", new String[]{"groupId"}, new String[]{groupId.toString()},null, null);
-		if (list == null) {
-			return Collections.emptyList();
-		}else{
-			return list;
-		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("groupId", groupId);
+		List<GroupAndResource> list = this.baseService.findByWhere("GroupAndResource", map);
+		return list;
 	}
 	
 	@Override
