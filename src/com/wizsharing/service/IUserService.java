@@ -9,15 +9,13 @@ import com.wizsharing.pagination.Page;
 
 public interface IUserService {
 
-	public List<User> getUserList(Page<User> page) throws Exception;
-	
 	public List<User> getUserList(Parameter param, Page<User> page) throws Exception;
 	
 	public User getUserByName(String user_name) throws Exception;
 
 	public User getUserById(Integer id) throws Exception;
 	
-	public List<User> getUserByGroupId(String groupId, Page<User> page) throws Exception;
+	public List<User> getUserByGroupId(String groupId, Parameter param, Page<User> page) throws Exception;
 	
 	public void doUpdate(User user) throws Exception;
 	

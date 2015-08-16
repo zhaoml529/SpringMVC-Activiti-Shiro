@@ -65,17 +65,16 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public List<User> getUserByGroupId(String groupId, Page<User> page) throws Exception {
-		List<User> list = this.baseService.findByPage("User", new String[]{"group"}, new String[]{groupId}, new String[]{"id"}, new String[]{"DESC"}, page);
+	public List<User> getUserByGroupId(String groupId, Parameter param,  Page<User> page) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(groupId != null){
+			map.put("group", groupId);
+		}
+		List<User> list = this.baseService.findListPage("User", param, map, page);
+		
 		return list;
 	}
 	
-	@Override
-	public List<User> getUserList(Page<User> page) throws Exception{
-		List<User> list = this.baseService.findByPage("User", null, null, new String[]{"id"}, new String[]{"DESC"}, page);
-		return list;
-	}
-
 	@Override
 	public User getUserById(Integer id) throws Exception {
 		return this.baseService.getUnique("User", new String[]{"id"}, new String[]{id.toString()});

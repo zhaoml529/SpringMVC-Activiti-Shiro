@@ -28,16 +28,6 @@ public interface IBaseService<T> {
 	public List<T> getRangeDate(String tableSimpleName,String[] columns,String[] values) throws Exception;
 	
 	/**
-	 * 模糊查询
-	 * @param entity
-	 * @param columns
-	 * @param querys
-	 * @return
-	 * @throws Exception
-	 */
-	public List<T> findByQuery(final Class<T> entity, String[] columns, String[] querys) throws Exception;
-	
-	/**
 	 * 条件查询
 	 * @param tableSimpleName
 	 * @param columns
@@ -49,19 +39,6 @@ public interface IBaseService<T> {
 	 */
 	public List<T> findByWhere(String tableSimpleName,String[] columns,String[] values, String[] orderBy, String[] orderType) throws Exception;
 
-	/**
-	 * 分页查询
-	 * @param tableSimpleName
-	 * @param columns
-	 * @param values
-	 * @param orderBy
-	 * @param orderType
-	 * @param page
-	 * @return
-	 * @throws Exception
-	 */
-	public List<T> findByPage(String tableSimpleName,String[] columns,String[] values, String[] orderBy, String[] orderType, Page<T> page) throws Exception;
-	
 	/**
 	 * 批量执行HQL 响应数目
 	 * @param hql

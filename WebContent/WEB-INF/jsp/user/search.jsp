@@ -37,14 +37,14 @@
 					<div class="gradeSearchBox">
 						<select name="searchConditions" class="gradeSelectSearchBox">
 							<option value="=">等于</option>
-							<option value="<>">大于小于</option>
+							<option value="<>">不等于</option>
 							<option value="<">小于</option>
 							<option value=">">大于</option>
 							<option value="like">模糊</option>
 						</select>
 					</div> 
 				</td>
-					<td><input class="easyui-textbox easyui-validatebox" name="searchVals" size="18"> <a style="display: none;" href="javascript:void(0);" onclick="userSearchRemove(this);">删除</a>
+					<td><input id="searchVals" class="easyui-validatebox" style="height: 19px; width: 160px;" required="true" name="searchVals" size="18"> <a style="display: none;" href="javascript:void(0);" onclick="userSearchRemove(this);">删除</a>
 				</td>
 			</tr>
 		</table>

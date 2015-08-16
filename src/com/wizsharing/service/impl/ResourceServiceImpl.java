@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wizsharing.dao.IJdbcDao;
+import com.wizsharing.entity.Parameter;
 import com.wizsharing.entity.Resource;
 import com.wizsharing.pagination.Page;
 import com.wizsharing.service.IBaseService;
@@ -30,25 +31,6 @@ public class ResourceServiceImpl implements IResourceService {
 		Resource res = this.baseService.getUnique("Resource", new String[]{"id", "available"}, new String[]{id.toString(), "1"});
 		return res;
 	}
-//
-//	@Override
-//	public List<Resource> getMenus(List<GroupAndResource> gr) throws Exception {
-//		List<Resource> menus = new ArrayList<Resource>();
-//		for(GroupAndResource gar : gr){
-//			Resource resource= getPermissions(gar.getResourceId());
-//			if(!BeanUtils.isBlank(resource)){
-//				if(resource.isRootNode()) {
-//	                continue;
-//	            }
-//	            if(!"menu".equals(resource.getType())) {
-//	                continue;
-//	            }
-//	            menus.add(resource);
-//			}
-//		}
-//		
-//		return menus;
-//	}
 	
 	@Override
 	public List<Resource> getTree(Integer groupId) throws Exception {
@@ -91,8 +73,8 @@ public class ResourceServiceImpl implements IResourceService {
 	}
 
 	@Override
-	public List<Resource> getResourceList(Page<Resource> p) throws Exception {
-		return this.baseService.findByPage("Resource", new String[]{"available"}, null, null, new String[]{"1"}, p);
+	public List<Resource> getResourceList(Parameter param, Page<Resource> page) throws Exception {
+		return this.baseService.findListPage("Resource", param, null, page);
 	}
 
 	@Override

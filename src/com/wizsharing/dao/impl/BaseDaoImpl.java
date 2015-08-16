@@ -80,29 +80,6 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 	    return (T) query.uniqueResult();
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<T> findByQuery(Class<T> entity, String[] columns, String[] querys){
-		Session session=sessionFactory.getCurrentSession();
-    	Criteria criteria = session.createCriteria(entity);
-    	if(columns != null && querys != null){
-    		if(columns.length > 0 && columns.length==querys.length){  
-                for(int i = 0; i < columns.length; i++){  
-                	criteria.add(Restrictions.like(columns[i], querys[i], MatchMode.START));
-                }
-                criteria.add(Restrictions.eq("isDelete", new Integer(0)));
-                criteria.addOrder(Order.asc(columns[0]));
-//                criteria.setMaxResults(15);
-            }else{
-            	return Collections.emptyList();
-            }
-    	}else{
-    		return Collections.emptyList();
-    	}
-        List<T> list=criteria.list();
-        return list;
-	}
-
 	@Override
 	public Long getCount(String hql) throws Exception {
 		Query query = this.getSession().createQuery(hql);

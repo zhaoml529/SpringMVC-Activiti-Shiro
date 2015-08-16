@@ -43,7 +43,7 @@ public class ResourceTest {
 		r1.setPermission("admin:*");
 		r1.setType("menu");
 		r1.setUrl("");
-		r1.setAvailable(1);
+		r1.setIsDelete(1);
 		Serializable id = this.resourceService.doAdd(r1);
 		
 		Resource r2 = new Resource();
@@ -53,7 +53,7 @@ public class ResourceTest {
 		r2.setPermission("admin:*");
 		r2.setType("menu");
 		r2.setUrl("");
-		r2.setAvailable(1);
+		r2.setIsDelete(1);
 		Serializable idr2 = this.resourceService.doAdd(r2);
 		
 		Resource r4 = new Resource();
@@ -63,7 +63,7 @@ public class ResourceTest {
 		r4.setPermission("admin:*");
 		r4.setType("menu");
 		r4.setUrl("");
-		r4.setAvailable(1);
+		r4.setIsDelete(1);
 		this.resourceService.doAdd(r4);
 		
 		Resource r3 = new Resource();
@@ -73,7 +73,7 @@ public class ResourceTest {
 		r3.setPermission("admin:*");
 		r3.setType("menu");
 		r3.setUrl("");
-		r3.setAvailable(1);
+		r3.setIsDelete(1);
 		this.resourceService.doAdd(r3);
 	}
 	

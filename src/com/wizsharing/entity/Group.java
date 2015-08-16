@@ -48,6 +48,9 @@ public class Group implements Serializable{
 	@JsonIgnore
     private Set<User> user = new HashSet<User>();
     
+	@Column(name = "IS_DELETE", length = 2, nullable = false)
+    private Integer isDelete;
+	
 	public Group(){
 		
 	}
@@ -91,7 +94,13 @@ public class Group implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public Integer getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(Integer isDelete) {
+		this.isDelete = isDelete;
+	}
     
-    
-	
 }

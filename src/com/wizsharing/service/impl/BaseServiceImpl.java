@@ -1,7 +1,6 @@
 package com.wizsharing.service.impl;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -16,9 +15,6 @@ import com.wizsharing.entity.Parameter;
 import com.wizsharing.pagination.Page;
 import com.wizsharing.service.IBaseService;
 import com.wizsharing.util.BeanUtils;
-import com.wizsharing.util.Constants;
-
-import freemarker.template.utility.StringUtil;
 
 
 
@@ -175,76 +171,6 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
 	}
 
 	@Override
-	public List<T> findByQuery(Class<T> entity, String[] columns,
-			String[] querys) throws Exception {
-		List<T> list =  this.baseDao.findByQuery(entity, columns, querys);
-		if(BeanUtils.isBlank(list)){
-      		return Collections.emptyList();
-       }else{
-      		return list;
-       } 
-	}
-
-	@Override
-	public List<T> findByPage(String tableSimpleName, String[] columns,
-			String[] values, String[] orderBy, String[] orderType, Page<T> page)
-			throws Exception {
-		Integer totalSum = 0;
-		List<T> list = new ArrayList<T>();
-		if(columns != null && values != null){
-        	if(columns.length > 0 && columns.length==values.length){  
-        		list = findByWhere(tableSimpleName, columns, values, orderBy, orderType);
-        	}else{
-        		list = getAllList(tableSimpleName, orderBy, orderType);
-        	}
-		}else{
-			list = getAllList(tableSimpleName, orderBy, orderType);
-		}
-		
-		if(!BeanUtils.isBlank(list)){
-			totalSum = list.size();
-		}
-		int[] pageParams = page.getPageParams(Long.valueOf(totalSum));
-		
-		StringBuffer sb = new StringBuffer();  
-        sb.append("select a from ").append(tableSimpleName).append(" a ");  
-        if(columns != null && values != null){
-        	if(columns.length > 0 && columns.length==values.length){  
-        		sb.append( " where ");
-                for(int i = 0; i < columns.length; i++){  
-     	            sb.append("a.").append(columns[i]).append("='").append(values[i]).append("'");  
-     	            if(i < columns.length-1){  
-     	                sb.append(" and ");  
-     	            }  
-                }  
-        	}
-        }
-        
-        if(orderBy != null && orderType != null){
-           if(orderBy.length > 0 && orderBy.length == orderType.length){
-        	   sb.append(" order by ");
-        	   for(int i = 0; i < orderBy.length; i++){
-        		   sb.append("a.").append(orderBy[i]).append(" ").append(orderType[i]);
-        		   if(i < orderBy.length-1){
-        			   sb.append(", ");
-        		   }
-        	   }
-           }
-        }
-        
-        String hql = sb.toString();
-        
-        logger.info("findByPage: HQL: "+hql);
-        list = this.baseDao.findByPage(hql, pageParams[0], pageParams[1]); 
-        if( list.size()>0 ){
-        	page.setResult(list);
-    	    return list;
-        }else{
-    	    return Collections.emptyList();
-        }
-	}
-
-	@Override
 	public Integer executeHql(String hql) throws Exception {
 		return this.baseDao.executeHql(hql);
 	}
@@ -271,8 +197,13 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
         sb.append("select a from ").append(tableSimpleName).append(" a where a.isDelete = 0 ");  
         
         //普通模糊查询
-        if(StringUtils.isNotBlank(param.getSearchValue())){
-        	sb.append(" and a." + param.getSearchName() + " like '%" + param.getSearchValue() + "%' ");
+        if(param != null && StringUtils.isNotBlank(param.getSearchValue())){
+        	//如果查询的字段中有日期
+        	if(param.getSearchName().toLowerCase().indexOf("date") >= 0){
+        		sb.append(" and to_char(a." + param.getSearchName() + ", 'yyyy-MM-dd') like '%" + param.getSearchValue() + "%' ");
+        	}else{
+        		sb.append(" and a." + param.getSearchName() + " like '%" + param.getSearchValue() + "%' ");
+        	}
         }
         
         //自定义查询条件
@@ -283,7 +214,7 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
         }
         
         //高级查询
-        if(param.getSearchColumnNames() != null && param.getSearchColumnNames().trim().length() > 0){
+        if(param != null && param.getSearchColumnNames() != null && param.getSearchColumnNames().trim().length() > 0){
 	        String[] searchColumnNameArray=param.getSearchColumnNames().split(",");
 			String[] searchAndsArray=param.getSearchAnds().split(",");
 			String[] searchConditionsArray=param.getSearchConditions().split(",");
@@ -292,20 +223,26 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
 			if(searchColumnNameArray.length >0 ){
 				for (int i = 0; i < searchColumnNameArray.length; i++) {
 					if (searchColumnNameArray[i].trim().length() > 0 && searchConditionsArray[i].trim().length()>0) {
-						String temp=searchValsArray[i].trim().replaceAll("\'", "");
-						if ("like".equals(searchConditionsArray[i].trim()))
-						{
-							sb.append(" " + searchAndsArray[i].trim() + " a. " + searchColumnNameArray[i].trim() + " " + searchConditionsArray[i].trim() + " " +"'%"+ temp+"%'");
-							
+						String value=searchValsArray[i].trim().replaceAll("\'", "");
+						if ("like".equals(searchConditionsArray[i].trim())){
+							if(searchColumnNameArray[i].trim().toLowerCase().indexOf("date") >= 0){
+								sb.append(" " + searchAndsArray[i].trim() + " to_char(a." + searchColumnNameArray[i].trim() + ", 'yyyy-MM-dd') " + searchConditionsArray[i].trim() + " " +"'%"+ value+"%'");
+							}else{
+								sb.append(" " + searchAndsArray[i].trim() + " a. " + searchColumnNameArray[i].trim() + " " + searchConditionsArray[i].trim() + " " +"'%"+ value+"%'");
+							}
 						}else {
-							sb.append(" " + searchAndsArray[i].trim() + " a. " + searchColumnNameArray[i].trim() + " " + searchConditionsArray[i].trim() + " " +"'"+ temp+"'");
+							if(searchColumnNameArray[i].trim().toLowerCase().indexOf("date") >= 0){
+								sb.append(" " + searchAndsArray[i].trim() + " to_char(a." + searchColumnNameArray[i].trim() + ", 'yyyy-MM-dd') " + searchConditionsArray[i].trim() + " " +"'"+ value+"'");
+							}else{
+								sb.append(" " + searchAndsArray[i].trim() + " a. " + searchColumnNameArray[i].trim() + " " + searchConditionsArray[i].trim() + " " +"'"+ value+"'");
+							}
 						}
 					}
 				}
 			}
         }
 		
-		if(StringUtils.isNotBlank(param.getSort())) {
+		if(param != null && StringUtils.isNotBlank(param.getSort())) {
 			sb.append(" order by a." + param.getSort() + " " + param.getOrder());
 		}
 		
@@ -328,8 +265,13 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
         sb.append("select count(*) from ").append(tableSimpleName).append(" a where a.isDelete = 0 ");
         
         //普通模糊查询
-        if(StringUtils.isNotBlank(param.getSearchValue())){
-        	sb.append(" and a." + param.getSearchName() + " like '%" + param.getSearchValue() + "%' ");
+        if(param != null && StringUtils.isNotBlank(param.getSearchValue())){
+        	//如果查询的字段中有日期
+        	if(param.getSearchName().toLowerCase().indexOf("date") >= 0){
+        		sb.append(" and to_char(a." + param.getSearchName() + ", 'yyyy-MM-dd') like '%" + param.getSearchValue() + "%' ");
+        	}else{
+        		sb.append(" and a." + param.getSearchName() + " like '%" + param.getSearchValue() + "%' ");
+        	}
         }
         
         //自定义查询条件
@@ -340,7 +282,7 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
         }
         
         //高级查询
-        if(param.getSearchColumnNames() != null && param.getSearchColumnNames().trim().length() > 0){
+        if(param != null && param.getSearchColumnNames() != null && param.getSearchColumnNames().trim().length() > 0){
 	        String[] searchColumnNameArray=param.getSearchColumnNames().split(",");
 			String[] searchAndsArray=param.getSearchAnds().split(",");
 			String[] searchConditionsArray=param.getSearchConditions().split(",");
@@ -349,13 +291,19 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
 			if(searchColumnNameArray.length >0 ){
 				for (int i = 0; i < searchColumnNameArray.length; i++) {
 					if (searchColumnNameArray[i].trim().length() > 0 && searchConditionsArray[i].trim().length()>0) {
-						String temp=searchValsArray[i].trim().replaceAll("\'", "");
-						if ("like".equals(searchConditionsArray[i].trim()))
-						{
-							sb.append(" " + searchAndsArray[i].trim() + " a. " + searchColumnNameArray[i].trim() + " " + searchConditionsArray[i].trim() + " " +"'%"+ temp+"%'");
-							
+						String value=searchValsArray[i].trim().replaceAll("\'", "");
+						if ("like".equals(searchConditionsArray[i].trim())){
+							if(searchColumnNameArray[i].trim().toLowerCase().indexOf("date") >= 0){
+								sb.append(" " + searchAndsArray[i].trim() + " to_char(a." + searchColumnNameArray[i].trim() + ", 'yyyy-MM-dd') " + searchConditionsArray[i].trim() + " " +"'%"+ value+"%'");
+							}else{
+								sb.append(" " + searchAndsArray[i].trim() + " a. " + searchColumnNameArray[i].trim() + " " + searchConditionsArray[i].trim() + " " +"'%"+ value+"%'");
+							}
 						}else {
-							sb.append(" " + searchAndsArray[i].trim() + " a. " + searchColumnNameArray[i].trim() + " " + searchConditionsArray[i].trim() + " " +"'"+ temp+"'");
+							if(searchColumnNameArray[i].trim().toLowerCase().indexOf("date") >= 0){
+								sb.append(" " + searchAndsArray[i].trim() + " to_char(a." + searchColumnNameArray[i].trim() + ", 'yyyy-MM-dd') " + searchConditionsArray[i].trim() + " " +"'"+ value+"'");
+							}else{
+								sb.append(" " + searchAndsArray[i].trim() + " a. " + searchColumnNameArray[i].trim() + " " + searchConditionsArray[i].trim() + " " +"'"+ value+"'");
+							}
 						}
 					}
 				}
@@ -364,4 +312,5 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
 		String hql = sb.toString();
 		return this.baseDao.getCount(hql);
 	}
+	
 }

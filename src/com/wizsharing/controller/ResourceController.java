@@ -42,7 +42,7 @@ public class ResourceController {
 	@RequestMapping(value = "/doAdd")
 	@ResponseBody
 	public Message doAdd(Resource resource) throws Exception{
-		resource.setAvailable(1);
+		resource.setIsDelete(0);
 		Message message = new Message();
 		try {
 			this.resourceService.doAdd(resource);
@@ -67,7 +67,7 @@ public class ResourceController {
 	public Message addTree(Resource resource) throws Exception{
 		resource.setType("menu");
 		resource.setPermission("admin:tree:*");
-		resource.setAvailable(1);
+		resource.setIsDelete(0);
 		Message message = new Message();
 		User user = UserUtil.getUserFromSession();
 		Serializable resourceId = this.resourceService.doAdd(resource);

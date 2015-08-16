@@ -81,8 +81,6 @@ public class UserController {
 	@ResponseBody
 	public Datagrid<Object> userList(Parameter param) throws Exception{
 		Page<User> page = new Page<User>(param.getPage(), param.getRows());
-		System.out.println(param.getSearchName()+"---"+param.getSearchValue());
-//		List<User> userList = this.userService.getUserList(p);
 		List<User> userList = this.userService.getUserList(param, page);
 		List<Object> jsonList=new ArrayList<Object>(); 
 		for(User user : userList){
@@ -373,19 +371,12 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/chooseUser")
 	@ResponseBody
-	public Datagrid<Object> chooseUser(
-			@RequestParam(value = "page", required = false) Integer page, 
-			@RequestParam(value = "rows", required = false) Integer rows,
-			@RequestParam(value = "groupId", required = false) String groupId) throws Exception{
-		Page<User> p = new Page<User>(page, rows);
-		if(groupId == null){
- 			this.userService.getUserList(p);
-		}else{
-			this.userService.getUserByGroupId(groupId, p);
-		}
+	public Datagrid<Object> chooseUser(Parameter param, @RequestParam(value = "groupId", required = false) String groupId) throws Exception{
+		Page<User> page = new Page<User>(param.getPage(), param.getRows());
+		this.userService.getUserByGroupId(groupId, param, page);
 		List<Object> jsonList=new ArrayList<Object>(); 
 		
-		for(User user: p.getResult()){
+		for(User user: page.getResult()){
 			Map<String, Object> map=new HashMap<String, Object>();
 			map.put("id", user.getId());
 			map.put("name", user.getName());
@@ -393,7 +384,7 @@ public class UserController {
 			map.put("registerDate", user.getRegisterDate());
 			jsonList.add(map);
 		}
-		Datagrid<Object> dataGrid = new Datagrid<Object>(p.getTotal(), jsonList);
+		Datagrid<Object> dataGrid = new Datagrid<Object>(page.getTotal(), jsonList);
 		return dataGrid;
 		
 	}

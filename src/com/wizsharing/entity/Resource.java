@@ -57,8 +57,8 @@ public class Resource implements Serializable {
 	@Column(name = "note", length = 300)
     private String note; 							//说明
 	
-	@Column(name = "available", length = 2, nullable = false)
-    private Integer available;
+	@Column(name = "IS_DELETE", length = 2, nullable = false)
+    private Integer isDelete;
     
 	public Integer getId() {
 		return id;
@@ -116,12 +116,20 @@ public class Resource implements Serializable {
 		this.note = note;
 	}
 
-	public Integer getAvailable() {
-		return available;
+	public Integer getSort() {
+		return sort;
 	}
 
-	public void setAvailable(Integer available) {
-		this.available = available;
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+
+	public Integer getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(Integer isDelete) {
+		this.isDelete = isDelete;
 	}
 
 	public boolean isRootNode() {

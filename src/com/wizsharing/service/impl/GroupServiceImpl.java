@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wizsharing.entity.Group;
+import com.wizsharing.entity.Parameter;
 import com.wizsharing.pagination.Page;
 import com.wizsharing.service.IBaseService;
 import com.wizsharing.service.IGroupService;
@@ -19,8 +20,8 @@ public class GroupServiceImpl implements IGroupService {
 	private IBaseService<Group> baseService;
 	
 	@Override
-	public List<Group> getGroupListPage(Page<Group> page) throws Exception{
-		List<Group> list = this.baseService.findByPage("Group", null, null, null, null, page);
+	public List<Group> getGroupListPage(Parameter param, Page<Group> page) throws Exception{
+		List<Group> list = this.baseService.findListPage("Group", param, null, page);
 		return list;
 	}
 

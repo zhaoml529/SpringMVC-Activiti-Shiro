@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.wizsharing.entity.Datagrid;
 import com.wizsharing.entity.Group;
 import com.wizsharing.entity.Message;
+import com.wizsharing.entity.Parameter;
 import com.wizsharing.pagination.Page;
 import com.wizsharing.service.IGroupAndResourceService;
 import com.wizsharing.service.IGroupService;
@@ -70,12 +71,10 @@ public class GroupController {
 	 */
 	@RequestMapping(value = "/chooseGroup")
 	@ResponseBody
-	public Datagrid<Group> chooseGroup(
-			@RequestParam(value = "page", required = false) Integer page, 
-			@RequestParam(value = "rows", required = false) Integer rows) throws Exception{
-		Page<Group> p = new Page<Group>(page, rows);
-		this.groupService.getGroupListPage(p);
-		return new Datagrid<Group>(p.getTotal(), p.getResult());
+	public Datagrid<Group> chooseGroup(Parameter param) throws Exception{
+		Page<Group> page = new Page<Group>(param.getPage(), param.getRows());
+		this.groupService.getGroupListPage(param, page);
+		return new Datagrid<Group>(page.getTotal(), page.getResult());
 		
 	}
 	
@@ -85,11 +84,10 @@ public class GroupController {
 	 */
 	@RequestMapping("/getGroupList")
 	@ResponseBody
-	public Datagrid<Group> getList(@RequestParam(value = "page", required = false) Integer page, 
-								@RequestParam(value = "rows", required = false) Integer rows) throws Exception{
-		Page<Group> p = new Page<Group>(page, rows);
-		this.groupService.getGroupListPage(p);
-		Datagrid<Group> dataGrid = new Datagrid<Group>(p.getTotal(), p.getResult());
+	public Datagrid<Group> getList(Parameter param) throws Exception{
+		Page<Group> page = new Page<Group>(param.getPage(), param.getRows());
+		this.groupService.getGroupListPage(param, page);
+		Datagrid<Group> dataGrid = new Datagrid<Group>(page.getTotal(), page.getResult());
 		return dataGrid;
 	}
 	

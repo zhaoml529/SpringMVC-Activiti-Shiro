@@ -3,6 +3,7 @@ package com.wizsharing.service;
 import java.io.Serializable;
 import java.util.List;
 
+import com.wizsharing.entity.Parameter;
 import com.wizsharing.entity.Resource;
 import com.wizsharing.pagination.Page;
 
@@ -16,7 +17,7 @@ public interface IResourceService {
 	
 	public List<Resource> getAllResource() throws Exception;
 	
-	public List<Resource> getResourceList(Page<Resource> p) throws Exception;
+	public List<Resource> getResourceList(Parameter param, Page<Resource> page) throws Exception;
 	
 	public Serializable  doAdd(Resource entity) throws Exception;
 	

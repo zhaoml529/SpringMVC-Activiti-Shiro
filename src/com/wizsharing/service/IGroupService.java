@@ -4,11 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.wizsharing.entity.Group;
+import com.wizsharing.entity.Parameter;
 import com.wizsharing.pagination.Page;
 
 public interface IGroupService {
 
-	public List<Group> getGroupListPage(Page<Group> page) throws Exception;
+	public List<Group> getGroupListPage(Parameter param, Page<Group> page) throws Exception;
 	
 	public List<Group> getGroupList() throws Exception;
 	

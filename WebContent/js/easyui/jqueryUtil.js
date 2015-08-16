@@ -265,17 +265,17 @@
 		};
 		//序列化表单到对象
 		jqueryUtil.serializeObject = function(form) {
-			console.dir(form.serializeArray());
+			//console.dir(form.serializeArray());
 			var o = {};
-			$.each(form.serializeArray(), function(index) {
+			$.each(form.serializeArray(), function(index, field) {
+				console.dir(field.name + " : " + field.value + "  ");
 				if (o[this['name']]) {
 					o[this['name']] = o[this['name']] + "," + (this['value']==''?' ':this['value']);
 				} else {
 					o[this['name']] = this['value']==''?' ':this['value'];
 				}
 			});
-			console.dir(o);
-			alert(o);
+			//console.dir(o);
 			return o;
 		};
 		/*$.extend($.fn.datagrid.defaults.editors, {
@@ -516,7 +516,7 @@
         
         //高级查询
         jqueryUtil.gradeSearch=function($dg,formId,url) {
-			$("<div/>").dialog({
+        	var search_dialog = $("<div/>").dialog({
 				href : ctx+url,
 				modal : true,
 				title : '高级查询',
@@ -528,19 +528,29 @@
 					handler : function() {
 						var currObj = $(this).closest('.panel').find('table');
 						currObj.find('tr:last').clone().appendTo(currObj);
-						currObj.find('tr:last a').show();
+						currObj.find('tr:last td:last a').show();
+						$.parser.parse();	//加载easyui
 					}
 				}, {
 					text : '确定',
 					iconCls : 'icon-ok',
 					handler : function() {
-						$dg.datagrid('reload',jqueryUtil.serializeObject($(formId)));
+						$.messager.progress({
+			                title: '提示信息！',
+			                text: '数据处理中，请稍后....'
+			            });
+						var isValid = $(formId).form('validate');
+						if(isValid){
+							$dg.datagrid('reload',jqueryUtil.serializeObject($(formId)));
+							search_dialog.dialog('destroy');
+							$.messager.progress('close');
+						}
 					}
 				}, {
 					text : '取消',
 					iconCls : 'icon-cancel',
 					handler : function() {
-						$(this).closest('.window-body').dialog('destroy');
+						search_dialog.dialog('destroy');
 						//$(this).dialog('destroy');
 					}
 				} ],
