@@ -29,47 +29,10 @@
 	</context:component-scan>
 	
     <!-- 指定自己定义的validator -->
-    <mvc:annotation-driven validator="validator"/>
+    <mvc:annotation-driven/>
     
-
-    <!-- 以下 validator  ConversionService 在使用 mvc:annotation-driven 会 自动注册-->
-    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
-        <!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
-        <property name="validationMessageSource" ref="messageSource"/>
-    </bean>
-
-    <!-- 国际化的消息资源文件（本系统中主要用于显示/错误消息定制） -->
-    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basenames">
-            <list>
-                <!-- 在web环境中一定要定位到classpath 否则默认到当前web应用下找  -->
-                <value>classpath:message/messages</value>
-                <value>classpath:message/ValidationMessages</value><!-- 默认的错误消息文件 -->
-            </list>
-        </property>
-        <property name="useCodeAsDefaultMessage" value="false"/>
-        <property name="defaultEncoding" value="UTF-8"/>
-        <property name="cacheSeconds" value="60"/>
-    </bean>
-
-	<!-- 使用cookie存储国际化信息 -->
-    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-        <property name="cookieName" value="language"/>
-        <property name="cookieMaxAge" value="3600"/>
-        <property name="defaultLocale" value="zh_CN"/>
-    </bean>
-	
-    <mvc:interceptors>
-        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-            <property name="paramName" value="language"/>
-        </bean>
-    </mvc:interceptors>
 	<!-- 当访问主页时自动转发到/userAction/login_view控制器。 -->
 	<!-- <mvc:view-controller path="/" view-name="forward:/userAction/login_view"/> -->
-	
-	<!-- restful -->
-	<!-- <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/> -->
 	
 	<!-- 视图处理器 -->
 	<bean id="jspViewResolver"  
@@ -87,7 +50,7 @@
 	<mvc:resources mapping="/images/**" location="/images/" cache-period="31556926"/>
 	<mvc:resources mapping="/modeler/**" location="/modeler/" cache-period="31556926"/>
 	<!-- 全局异常配置 -->  
-     <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
          <property name="exceptionMappings">  
              <props>  
                  <prop key="java.lang.Exception">error/500</prop>  
@@ -102,7 +65,7 @@
          <property name="defaultErrorView" value="error/500"></property>  
          <!-- 默认HTTP状态码 -->  
          <property name="defaultStatusCode" value="500"></property>  
-     </bean>  
+    </bean>  
 
 	
 <!--     <mvc:interceptors>
@@ -129,7 +92,7 @@
 	 	<property name="maxInMemorySize">
 			<value>104857600</value><!-- 最大10M -->
 		</property>
-<!-- 		<property name="uploadTempDir">
+    <!-- <property name="uploadTempDir">
 			<value>UploadFile</value>
 		</property> -->
 		<property name="defaultEncoding">
