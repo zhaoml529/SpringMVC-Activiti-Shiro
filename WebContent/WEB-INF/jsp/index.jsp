@@ -44,7 +44,6 @@
 			});
 			
 			var role = $("#role").val();
-			alert(role);
 			if(role == 'admin'){
 				zTree = $.fn.zTree.init($("#tree_admin"), setting_admin, treeNodes);
 			}else{
