@@ -7,20 +7,30 @@
 			type : 'POST',
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				$.messager.progress('close');
-				$.messager.alert('错误', XMLHttpRequest.responseText);
+				$.messager.alert('错误11', XMLHttpRequest.responseText);
 			}
 		});
 		
 		var easyuiErrorFunction = function(XMLHttpRequest) {
 			$.messager.progress('close');
-			$.messager.alert('错误', XMLHttpRequest.responseText);
+			var msg = "${msg }";
+			var a = XMLHttpRequest.responseText.indexOf("登录");
+			alert(msg);
+//			if(a < 0){
+//				$.messager.alert('错误22', XMLHttpRequest.responseText);
+//			}else{
+//				//location.reload();
+//				XMLHttpRequest.open("POST", "");
+//			}
+			$.messager.alert('错误22', XMLHttpRequest.responseText);
 		};
-		$.fn.datagrid.defaults.onLoadError = easyuiErrorFunction;
-		$.fn.treegrid.defaults.onLoadError = easyuiErrorFunction;
-		$.fn.tree.defaults.onLoadError = easyuiErrorFunction;
-		$.fn.combogrid.defaults.onLoadError = easyuiErrorFunction;
-		$.fn.combobox.defaults.onLoadError = easyuiErrorFunction;
-		$.fn.form.defaults.onLoadError = easyuiErrorFunction;
+		
+//		$.fn.datagrid.defaults.onLoadError = easyuiErrorFunction;
+//		$.fn.treegrid.defaults.onLoadError = easyuiErrorFunction;
+//		$.fn.tree.defaults.onLoadError = easyuiErrorFunction;
+//		$.fn.combogrid.defaults.onLoadError = easyuiErrorFunction;
+//		$.fn.combobox.defaults.onLoadError = easyuiErrorFunction;
+//		$.fn.form.defaults.onLoadError = easyuiErrorFunction;
 		/**
 		 * 取消easyui默认开启的parser
 		 * 在页面加载之前，先开启一个进度条
@@ -47,10 +57,12 @@
 			}, 1);
 			$.parser.auto = true;
 		});
+		
 		//IE检测
-			jqueryUtil.isLessThanIe8 = function() {
-				return ($.browser.msie && $.browser.version < 8);
-			};
+		jqueryUtil.isLessThanIe8 = function() {
+			return ($.browser.msie && $.browser.version < 8);
+		};
+		
 		/**
 		 * 使panel和datagrid在加载时提示
 		 * @requires jQuery,EasyUI

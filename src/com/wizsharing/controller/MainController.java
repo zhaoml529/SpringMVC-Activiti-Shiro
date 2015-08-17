@@ -32,7 +32,7 @@ public class MainController {
     private IResourceService resourceService;
 	
     @RequestMapping(value = "/north")
-    public String index() {
+    public String north() {
         return "layout/north";
     }
 
@@ -47,7 +47,7 @@ public class MainController {
     }
     
     @RequestMapping(value = "/south")
-    public String nav(HttpSession session, Model model) throws Exception {
+    public String south() throws Exception {
     	return "layout/south";
     }
     
@@ -62,8 +62,13 @@ public class MainController {
     }
     
     @RequestMapping("/")
-    public String index(Model model) throws Exception {
+    public String index() throws Exception {
         return "index";
+    }
+    
+    @RequestMapping("/kickout")
+    public String kickout() throws Exception {
+    	return "error/kickout";
     }
     
 }

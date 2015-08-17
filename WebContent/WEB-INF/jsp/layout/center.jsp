@@ -5,6 +5,10 @@
 	var centerTabs;
 	var tabsMenu;
 	$(function() {
+		if (top.location !== self.location) { 
+			//跳出ifram避免嵌套显示
+		    top.location=self.location; 
+		} 
 		tabsMenu = $('#tabsMenu').menu({
 			onClick : function(item) {
 				var curTabTitle = $(this).data('tabTitle');

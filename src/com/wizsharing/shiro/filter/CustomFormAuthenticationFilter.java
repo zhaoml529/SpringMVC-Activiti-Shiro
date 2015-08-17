@@ -2,11 +2,15 @@ package com.wizsharing.shiro.filter;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -54,22 +58,15 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
     		}
     	}
     	String successUrl = this.getSuccessUrl();
-//    	SavedRequest savedRequest = WebUtils.getAndClearSavedRequest(request);
-//    	if (savedRequest != null && savedRequest.getMethod().equalsIgnoreCase(AccessControlFilter.GET_METHOD)) {
-//            successUrl = savedRequest.getRequestUrl();
-//            contextRelative = false;
-//        }
-    	
-//    	用sendRedirect直接跳出框架，以免造成js框架重复加载js出错
-//    	  HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-//        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-//        if (!"XMLHttpRequest".equalsIgnoreCase(httpServletRequest.getHeader("X-Requested-With"))
-//                || request.getParameter("ajax") == null) {// 不是ajax请求
-//            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + this.getSuccessUrl());
-//        } else {
-//            httpServletRequest.getRequestDispatcher("/login/timeout/success").forward(httpServletRequest, httpServletResponse);
-//        }
-
+    	SavedRequest savedRequest = WebUtils.getAndClearSavedRequest(request);
+    	if (savedRequest != null && savedRequest.getMethod().equalsIgnoreCase(AccessControlFilter.GET_METHOD)) {
+            successUrl = savedRequest.getRequestUrl();
+            contextRelative = false;
+        }
+    	System.out.println(request.getContentType());
+    	System.out.println(((HttpServletRequest) request).getHeader("x-requested-with"));
+    	System.out.println(WebUtils.toHttp(request).getHeaderNames());
+    	System.out.println(WebUtils.toHttp(request).getHeader("X-Requested-With"));
         WebUtils.issueRedirect(request, response, successUrl, null, contextRelative);
 		return false;
     	

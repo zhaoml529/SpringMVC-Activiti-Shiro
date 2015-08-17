@@ -9,6 +9,7 @@ var user_dialog;
 
 $(function() {
 	//数据列表
+	alert(fixHeight(0.83));
     user_datagrid = $('#user_datagrid').datagrid({
         url: ctx+"/user/toList",
         width : 'auto',
