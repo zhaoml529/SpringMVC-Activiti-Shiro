@@ -53,10 +53,13 @@ public class LoginController {
         if(request.getParameter("kickout") != null){
         	return "error/kickout";
         }
-        if(request.getParameter("kickoutmsg") != null){
+        if(request.getParameter("kickoutMsg") != null){
         	model.addAttribute("msg", "您的帐号在另一个地点登录，您已被踢出！");
         }
         if(request.getParameter("forceLogout") != null) {
+        	return "error/forceLogout";
+        }
+        if(request.getParameter("forceLogoutMsg") != null) {
         	model.addAttribute("msg", "您已经被管理员强制退出，请重新登录！");
         }
         
