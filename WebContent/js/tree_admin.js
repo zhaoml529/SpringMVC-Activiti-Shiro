@@ -2,13 +2,13 @@
  * admin 可编辑菜单
  */
 var setting_admin = {
-	async: {
-		enable: true,
-		url:ctx+"/menu",
-		autoParam:["id"],
-		type: 'POST',
-		dataType: "json"
-	},
+//	async: {
+//		enable: true,
+//		url:ctx+"/menu",
+//		autoParam:["id"],
+//		type: 'POST',
+//		dataType: "json"
+//	},
 	view: {
 		addHoverDom: addHoverDom,//自定义添加节点，官方没有提供直接添加的接口
 		removeHoverDom: removeHoverDom,
@@ -235,7 +235,7 @@ function dropNext(treeId, nodes, targetNode) {
 	return true;
 }
 
-var log, className = "dark", curDragNodes, autoExpandNode;
+var curDragNodes, autoExpandNode;
 function beforeDrag(treeId, treeNodes) {
 	for (var i=0,l=treeNodes.length; i<l; i++) {
 		if (treeNodes[i].drag === false) {

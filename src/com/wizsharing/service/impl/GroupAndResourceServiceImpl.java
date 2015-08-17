@@ -25,7 +25,8 @@ public class GroupAndResourceServiceImpl implements IGroupAndResourceService {
 	public List<GroupAndResource> getResource(Integer groupId) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("groupId", groupId);
-		List<GroupAndResource> list = this.baseService.findByWhere("GroupAndResource", map);
+		String hql = "from GroupAndResource a where a.groupId = :groupId";
+		List<GroupAndResource> list = this.baseService.find(hql, map);
 		return list;
 	}
 	

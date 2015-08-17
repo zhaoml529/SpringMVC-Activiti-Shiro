@@ -11,33 +11,11 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<script type="text/javascript" src="${ctx}/js/tree_admin.js"></script>
+	<script type="text/javascript" src="${ctx}/js/tree_user.js"></script>
 	<style type="text/css">
 		.ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
 	</style>
 	<script type="text/javascript">
-		function zTreeOnClick(event, treeId, treeNode) {
-		    event.preventDefault();		//阻止zTree自动打开连接，默认为 target='_blank'
-		    if(treeNode.url != '#' || treeNode.url == ''){
-			    addTab(treeNode.name, treeNode.url);	//easyui添加Tab
-		    }
-		};
-	
-		var setting = {
-			data: {
-				simpleData: {
-					enable: true,
-					idKey: "id",
-					pIdKey: "parentId",
-					rootPId: 0
-				}
-			},
-			showLine : true,                //是否显示节点间的连线
-			checkable : false,               //每个节点上是否显示 CheckBox
-			callback: {
-				onClick: zTreeOnClick
-			}
-		};
-
 		var zTree;
 		var treeNodes;
 	
@@ -66,10 +44,11 @@
 			});
 			
 			var role = $("#role").val();
+			alert(role);
 			if(role == 'admin'){
-				//zTree = $.fn.zTree.init($("#tree_admin"), setting_admin, treeNodes);
+				zTree = $.fn.zTree.init($("#tree_admin"), setting_admin, treeNodes);
 			}else{
-				zTree = $.fn.zTree.init($("#tree_user"), setting_admin);
+				zTree = $.fn.zTree.init($("#tree_user"), setting_user, treeNodes);
 			}
 		});
 		

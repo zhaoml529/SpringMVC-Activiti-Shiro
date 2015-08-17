@@ -37,11 +37,6 @@ public class UserUtil {
     	return user;
     }
 
-    public static Integer getUserGroupFromSession() {
-    	Subject currentUser = SecurityUtils.getSubject();
-    	Integer groupId = (Integer) currentUser.getSession().getAttribute(Constants.GROUP_ID);
-    	return groupId;
-    }
     /**
      * 从Session移除当前用户信息
      * @param session

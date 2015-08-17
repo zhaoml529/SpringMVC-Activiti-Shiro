@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +14,7 @@ import com.wizsharing.entity.Resource;
 import com.wizsharing.entity.User;
 import com.wizsharing.service.IResourceService;
 import com.wizsharing.service.IUserService;
+import com.wizsharing.util.UserUtil;
 
 
 /**
@@ -54,9 +54,10 @@ public class MainController {
     @RequestMapping("/menu")
     @ResponseBody
     public List<Resource> getMenu() throws Exception{
-    	String username = (String) SecurityUtils.getSubject().getPrincipal();
-    	User user = this.userService.getUserByName(username);
-    	List<Resource> menus = this.resourceService.getTree(user.getGroup().getId());
+//    	String username = (String) SecurityUtils.getSubject().getPrincipal();
+//    	User user = this.userService.getUserByName(username);
+    	User u = UserUtil.getUserFromSession();
+    	List<Resource> menus = this.resourceService.getTree(u.getGroup().getId());
     	return menus;
     }
     

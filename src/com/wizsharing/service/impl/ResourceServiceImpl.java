@@ -38,7 +38,7 @@ public class ResourceServiceImpl implements IResourceService {
 	public List<Resource> getTree(Integer groupId) throws Exception {
 		if(!BeanUtils.isBlank(groupId)){
 			String hql = "select r from Resource r, GroupAndResource gr where " +
-					     "r.id = gr.resourceId and r.available = 1 and r.type = 'menu' and gr.groupId = "+groupId +
+					     "r.id = gr.resourceId and r.isDelete = 0 and r.type = 'menu' and gr.groupId = "+groupId +
 					     " order by r.parentId, r.sort";
 			return this.baseService.find(hql);
 		}else{
