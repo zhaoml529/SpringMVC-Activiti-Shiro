@@ -13,24 +13,15 @@
 		
 		var easyuiErrorFunction = function(XMLHttpRequest) {
 			$.messager.progress('close');
-			var msg = "${msg }";
-			var a = XMLHttpRequest.responseText.indexOf("登录");
-			alert(msg);
-//			if(a < 0){
-//				$.messager.alert('错误22', XMLHttpRequest.responseText);
-//			}else{
-//				//location.reload();
-//				XMLHttpRequest.open("POST", "");
-//			}
 			$.messager.alert('错误22', XMLHttpRequest.responseText);
 		};
 		
-//		$.fn.datagrid.defaults.onLoadError = easyuiErrorFunction;
-//		$.fn.treegrid.defaults.onLoadError = easyuiErrorFunction;
-//		$.fn.tree.defaults.onLoadError = easyuiErrorFunction;
-//		$.fn.combogrid.defaults.onLoadError = easyuiErrorFunction;
-//		$.fn.combobox.defaults.onLoadError = easyuiErrorFunction;
-//		$.fn.form.defaults.onLoadError = easyuiErrorFunction;
+		$.fn.datagrid.defaults.onLoadError = easyuiErrorFunction;
+		$.fn.treegrid.defaults.onLoadError = easyuiErrorFunction;
+		$.fn.tree.defaults.onLoadError = easyuiErrorFunction;
+		$.fn.combogrid.defaults.onLoadError = easyuiErrorFunction;
+		$.fn.combobox.defaults.onLoadError = easyuiErrorFunction;
+		$.fn.form.defaults.onLoadError = easyuiErrorFunction;
 		/**
 		 * 取消easyui默认开启的parser
 		 * 在页面加载之前，先开启一个进度条
@@ -108,7 +99,6 @@
 		$.fn.panel.defaults.onMove = easyuiPanelOnMove;
 		
 		/**
-		 * @author 孙宇
 		 * 
 		 * @requires jQuery,EasyUI
 		 * 
@@ -176,7 +166,6 @@
 			}
 		};
 		/**
-		 * @author 孙宇
 		 * 
 		 * @requires jQuery,EasyUI
 		 * 
@@ -210,7 +199,6 @@
 		};
 		
 		/**
-		 * @author 夏悸
 		 * 
 		 * @requires jQuery,EasyUI
 		 * 
@@ -243,7 +231,6 @@
 			return data;
 		};
 		/**
-		 * @author sy
 		 * 
 		 * @requires jQuery,EasyUI
 		 * 
@@ -573,7 +560,6 @@
 		};
 		
 		/**
-		 * @author 孙宇
 		 * 
 		 * @requires jQuery,EasyUI
 		 * 

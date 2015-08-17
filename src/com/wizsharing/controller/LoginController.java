@@ -42,19 +42,24 @@ public class LoginController {
         } else if(exceptionClassName != null) {
             error = "其他错误：" + exceptionClassName;
         }
-        model.addAttribute("msg", error);
-        if(request.getParameter("kickout") != null){
-        	model.addAttribute("msg", "您的帐号在另一个地点登录，您已被踢出！");
-        }
-        if(request.getParameter("forceLogout") != null) {
-        	model.addAttribute("msg", "您已经被管理员强制退出，请重新登录！");
-        }
         
         //前台是否显示验证码
         AtomicBoolean enabled = jcaptchaCache.get("jcaptchaEnabled");
         if(enabled != null){
         	request.setAttribute("jcaptcha", enabled.get());
         }
+        
+        model.addAttribute("msg", error);
+        if(request.getParameter("kickout") != null){
+        	return "error/kickout";
+        }
+        if(request.getParameter("kickoutmsg") != null){
+        	model.addAttribute("msg", "您的帐号在另一个地点登录，您已被踢出！");
+        }
+        if(request.getParameter("forceLogout") != null) {
+        	model.addAttribute("msg", "您已经被管理员强制退出，请重新登录！");
+        }
+        
         
         return "login";
     }

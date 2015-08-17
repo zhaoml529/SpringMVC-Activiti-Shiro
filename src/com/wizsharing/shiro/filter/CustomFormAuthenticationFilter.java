@@ -63,10 +63,6 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
             successUrl = savedRequest.getRequestUrl();
             contextRelative = false;
         }
-    	System.out.println(request.getContentType());
-    	System.out.println(((HttpServletRequest) request).getHeader("x-requested-with"));
-    	System.out.println(WebUtils.toHttp(request).getHeaderNames());
-    	System.out.println(WebUtils.toHttp(request).getHeader("X-Requested-With"));
         WebUtils.issueRedirect(request, response, successUrl, null, contextRelative);
 		return false;
     	

@@ -9,11 +9,11 @@ var user_dialog;
 
 $(function() {
 	//数据列表
-	alert(fixHeight(0.83));
+	//alert(fixHeight(0.8));
     user_datagrid = $('#user_datagrid').datagrid({
         url: ctx+"/user/toList",
         width : 'auto',
-		height : fixHeight(0.83),
+		height : 'auto',
 		pagination:true,
 		rownumbers:true,
 		border:false,

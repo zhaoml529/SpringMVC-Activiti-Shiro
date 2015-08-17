@@ -105,7 +105,7 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
             //会话被踢出了
             try {
                 subject.logout();
-                logger.info("踢掉用户成功----");
+                logger.info("踢掉用户成功----kickoutUrl: "+kickoutUrl);
             } catch (Exception e) { //ignore
             }
             saveRequest(request);
