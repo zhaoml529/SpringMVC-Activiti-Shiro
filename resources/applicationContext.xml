@@ -66,8 +66,6 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 	
-	<!-- <bean id="applicationContextHelper" class="com.wizsharing.util.ApplicationContextHelper"/> -->
-  	
    	<!-- 开启AOP监听 只对当前配置文件有效 -->
 	<!-- <aop:aspectj-autoproxy expose-proxy="true"/> -->
   	
