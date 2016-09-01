@@ -1,3 +1,3 @@
 # SpringMVC-Activiti-Shiro
 模版
-这个项目是临时搭的架子，框架结构和我库中的SpringOA项目是一样的，可以Fork SpringOA。
+这个项目是临时搭的架子，具体项目功能请转到  [EasyUI分支](https://github.com/zhaoml529/SpringOA/tree/EasyUI "推荐Fork此分支项目")！
